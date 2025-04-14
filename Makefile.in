@@ -1,0 +1,441 @@
+# makefile for LLVM-C2RTL
+#
+# how to use..
+#
+# PROJNAME = c2r_add_ss
+# SRCS= test_add.c
+# include ../Makefile.in
+
+RV_NO_FLGS = $(RV_NO_MD) $(RV_NO_FPU) $(RV_NO_MMU)
+
+ifeq ($(RV_NO_FLGS), 1 1 1)
+C2R_SUFFIX = _noMD
+else ifeq ($(RV_NO_FLGS), 0 1 1)
+C2R_SUFFIX = _noFPU_noMMU
+else ifeq ($(RV_NO_FLGS), 0 0 1)
+C2R_SUFFIX = _noMMU
+else ifeq ($(RV_NO_FLGS), 0 1 0)
+C2R_SUFFIX = _noFPU
+else ifeq ($(RV_NO_FLGS), 0 0 0)
+C2R_SUFFIX = _all
+endif
+
+# skip 1 0 1
+# skip 1 1 0
+# skip 1 0 0
+
+
+ifeq ($(strip $(TOP_FUNCS)),)
+TOP_FUNCS = $(PROJNAME)
+endif
+
+# If the following is defined, using "opt" to generate RTL.
+USE_C2RTL_OPT = 1
+
+VPATH = $(dir $(SRCS))
+
+# dir name
+BIN=bin
+OBJ=obj
+C2R_DIR=C2R_ROOT
+C2R_RTL_C_DIR=$(C2R_DIR)/RTL_C
+C2R_RTL_V_DIR=$(C2R_DIR)/RTL_V
+C2R_RTL_TB_DIR=$(C2R_DIR)/RTL_V_TB
+
+ifeq ($(TGT), rtl)	#generate RTL
+BLDDIR=rtl
+# 4/16/18 : code_gen
+else ifeq ($(TGT), cgen)
+BLDDIR=cgen
+else ifeq ($(TGT), opt)	#run opt without C2RTL
+BLDDIR=rtl
+else ifeq ($(TGT), sim)	#generate sim
+BLDDIR=sim
+else ifeq ($(TGT), vsim)	#generate verilog sim
+BLDDIR=vsim
+else	#normal build
+BLDDIR=release
+endif
+
+OBJDIR=$(OBJ)/$(BLDDIR)
+BINDIR=$(BIN)/$(BLDDIR)
+BINFILE=$(BINDIR)/$(PROJNAME).exe
+BCDIR=$(OBJ)/rtl
+
+# TARGET name
+TARGET_CGEN=$(BIN)/cgen/$(PROJNAME).exe
+TARGET_REL=$(BIN)/release/$(PROJNAME).exe
+TARGET_RTL=$(C2R_RTL_C_DIR)/$(PROJNAME).RTL.c
+TARGET_OPT=$(OBJ)/rtl/$(PROJNAME).opt.bc
+TARGET_SIM=$(BIN)/sim/$(PROJNAME).exe
+
+ifeq ($(USE_SOC_MODEL), 1)
+TARGET_VSIM=$(addprefix $(C2R_RTL_TB_DIR)/,$(addsuffix .out,$(MODULES)))
+TARGET_VCD=$(addprefix $(C2R_RTL_TB_DIR)/,$(addsuffix .vcd,$(MODULES)))
+SUB_MODULES=$(addprefix $(C2R_RTL_V_DIR)/,$(addsuffix .RTL.v,$(TOP_FUNCS)))
+else
+TARGET_VSIM=$(addprefix $(C2R_RTL_TB_DIR)/,$(addsuffix .out,$(TOP_FUNCS)))
+TARGET_VCD=$(addprefix $(C2R_RTL_TB_DIR)/,$(addsuffix .vcd,$(TOP_FUNCS)))
+endif
+
+TARGET_EDIF=$(addprefix $(C2R_RTL_TB_DIR)/,$(addsuffix .edif,$(TOP_FUNCS)))
+
+
+ifeq ($(TGT), rtl)	#generate RTL
+TARGET=$(TARGET_RTL)
+else ifeq ($(TGT), opt)	#run opt without C2RTL
+TARGET=$(TARGET_OPT)
+# 4/16/18 : code_gen
+else ifeq ($(TGT), cgen) #run codeGen
+TARGET=$(TARGET_CGEN)
+else ifeq ($(TGT), sim)	#generate sim
+TARGET=$(TARGET_SIM)
+else ifeq ($(TGT), vsim)	#generate verilog sim
+TARGET=$(TARGET_VSIM)
+else ifeq ($(TGT), edif)	#
+TARGET=$(TARGET_EDIF)
+else	#normal build
+TARGET=$(TARGET_REL)
+endif
+
+BCS=$(patsubst %.cpp, $(BCDIR)/%.bc, $(filter %.cpp,$(notdir $(SRCS))))
+BCS+=$(patsubst %.c, $(BCDIR)/%.bc, $(filter %.c,$(notdir $(SRCS))))
+DEPENDS = $(BCS:.bc=.d)
+
+# 5/31/17
+OBJS=$(patsubst %.cpp, $(OBJDIR)/%.o, $(filter %.cpp,$(notdir $(SRCS))))
+OBJS+=$(patsubst %.c, $(OBJDIR)/%.o, $(filter %.c,$(notdir $(SRCS))))
+
+
+LINKED_BC = $(BCDIR)/$(PROJNAME).link.bc
+OPT_BC = $(BCDIR)/$(PROJNAME).opt.bc
+
+# flags
+# for minGW
+MINGW = 1
+ifeq ($(OS) $(MINGW), Windows_NT 1)
+CC=clang++ -target x86_64-pc-windows-gnu
+else
+CC=clang
+endif
+ifeq ($(C2RTL_OFF), 1)
+CC=g++
+endif
+
+LLVMLINK=llvm-link
+LLVMLINKFLAGS=
+# isshiki : 9/9/16
+LLVMDIS=llvm-dis
+OPT=opt
+LLC=llc
+LLCFLAGS=-filetype=obj
+ARCH=any
+
+# CFLAGS    = -O3 -D"_CRT_SECURE_NO_WARNINGS"
+# CFLAGS to allow external flags (27-9-17 Mustafa)
+CFLAGS    += -g -D"_CRT_SECURE_NO_WARNINGS"
+
+ifeq ($(USE_C2RTL_OPT), 1)
+#CFLAGS_RTL= -O1 -D"_CRT_SECURE_NO_WARNINGS" -D"__TCT_COMPILER_USED__" -D"__LLVM_C2RTL__" -g
+CFLAGS_RTL= -O1 -D"_CRT_SECURE_NO_WARNINGS" -D"__LLVM_C2RTL__" -g
+else
+CFLAGS_RTL= -D"_CRT_SECURE_NO_WARNINGS"
+endif
+# CFLAGS_SIM to allow external flags (27-9-17 Mustafa)
+ifeq ($(SKIP_RTL_C_SIM), 1)
+CFLAGS_SIM += -O3 -D"_CRT_SECURE_NO_WARNINGS"
+else
+CFLAGS_SIM += -O3 -D"_CRT_SECURE_NO_WARNINGS" -D"RUN_C2R_TEST"
+endif
+
+# 4/16/18 : CodeGen flag
+CFLAGS_CODE_GEN= -D"RUN_C2R_CODE_GEN" -D"_CRT_SECURE_NO_WARNINGS"
+
+ifneq ($(OS),Windows_NT)
+CPPFLAGS = -std=c++11
+else
+CPPFLAGS = -std=c++14
+endif
+
+# In Ubuntu, add math library / add stdc++ library --> 5/31/17 : also -std=gnu++11 (only for c++ files)
+ifneq ($(OS),Windows_NT)
+LFLAGS += -lm -lstdc++
+endif
+
+OPTFLAGS= -O3
+OPTFLAGS_RTL= -C2R_Setup -C2R_IPConstProp -C2R_LoopUnroll -sccp -simplifycfg -dce -C2RTL
+OPTFLAGS_SYS= -C2Sys_Setup -C2R_IPConstProp -C2R_LoopUnroll -C2System
+# OPTFLAGS_OPT added : 9/20/16 (isshiki)
+OPTFLAGS_OPT= -C2R_Setup -C2R_IPConstProp -C2R_LoopUnroll -sccp -simplifycfg -dce
+
+ifeq ($(TGT), rtl)	#generate RTL
+CFLAGS=$(CFLAGS_RTL)
+else ifeq ($(TGT), opt)	#generate RTL
+CFLAGS=$(CFLAGS_RTL)
+# 4/16/18 : codeGen
+else ifeq ($(TGT), cgen) #run codeGen
+CFLAGS=$(CFLAGS_CODE_GEN)
+else ifeq ($(TGT), sim)	#generate sim
+CFLAGS=$(CFLAGS_SIM)
+else
+endif
+
+# ifeq ($(RV_NO_FPU), 1)
+# CFLAGS += -D"NO_FPU"
+# endif
+
+ifeq ($(RV_NO_FPU), 1)
+CFLAGS += -D"NO_FPU" -D"NO_DOUBLE_FPU"
+else ifeq ($(RV_NO_DOUBLE_FPU), 1)
+CFLAGS += -D"NO_DOUBLE_FPU"
+endif
+
+ifeq ($(RV_NO_MMU), 1)
+CFLAGS += -D"NO_MMU"
+endif
+
+ifeq ($(RV_NO_MD), 1)
+CFLAGS += -D"NO_MULDIV"
+endif
+
+ifeq ($(RV_CPU_ONLY), 1)
+CFLAGS += -D"CPU_ONLY"
+endif
+
+ifeq ($(C2RTL_OFF), 1)
+CFLAGS += -D"GCC_TEMPLATE_PATCH"
+endif
+
+ifeq ($(RV_GEN_TB_VECTOR), 1)
+CFLAGS += -D"C2R_CREATE_TB_VECTOR"
+endif
+
+ifeq ($(RV64), 1)
+CFLAGS += -D"PROC_64BIT"
+endif
+
+CFLAGS += $(LOCAL_CFLAGS)
+
+
+# plz install iverilog & set PATH to bin
+# http://bleyer.org/icarus/
+VVP=vvp
+IVERILOG=iverilog
+
+# PHONY
+.PHONY: bad all clean build check rebuild rtl sim vsim run runsim runvvp edif
+bad:
+	@$(MAKE) build TGT=$(TGT) --no-print-directory
+
+all:
+ifeq ($(C2RTL_OFF), 1)
+	@$(MAKE) runvvp --no-print-directory
+else
+	@$(MAKE) build TGT=rtl --no-print-directory
+	@$(MAKE) runvvp --no-print-directory
+endif
+
+opt:
+	@$(MAKE) build TGT=opt --no-print-directory
+
+rtl:
+ifeq ($(USE_CODE_GEN), 1)
+	@$(MAKE) build TGT=cgen --no-print-directory
+endif
+ifneq ($(C2RTL_OFF), 1)
+	@$(MAKE) build TGT=rtl --no-print-directory
+endif
+
+sim:
+	@$(MAKE) build TGT=sim --no-print-directory
+
+vsim:
+	@$(MAKE) build TGT=vsim --no-print-directory
+
+vvp:
+	@$(MAKE) runvvp --no-print-directory
+
+edif:
+	@$(MAKE) build TGT=edif --no-print-directory
+
+build:	check $(TARGET)
+
+check:
+ifeq ($(OS),Windows_NT)
+	@[ -d $(OBJDIR) ] || mkdir $(subst /,\,$(OBJDIR))
+	@[ -d $(BINDIR) ] || mkdir $(subst /,\,$(BINDIR))
+else
+	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	@[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
+endif
+
+cgen:
+ifeq ($(USE_CODE_GEN), 1)
+	@$(MAKE) build TGT=cgen --no-print-directory
+endif
+
+ifeq ($(OS), Windows_NT)
+SETUP_C2R_DIR=cp -r
+else
+SETUP_C2R_DIR=ln -s
+CLEAN_FILES=$(C2R_DIR)$(C2R_SUFFIX)/RTL_V_TB/*.out $(C2R_DIR)$(C2R_SUFFIX)/RTL_V_TB/*.log
+endif
+
+#ifeq ($(OS),Windows_NT)
+#RM_FLAG=-r
+#else
+#RM_FLAG=-rf
+#endif
+
+clean:
+ifeq ($(C2RTL_OFF), 1)
+	rm -rf $(OBJ) $(BIN) $(CLEAN_FILES) $(C2R_DIR)
+	$(SETUP_C2R_DIR) $(C2R_DIR)$(C2R_SUFFIX) $(C2R_DIR)
+else
+	rm -rf $(OBJ) $(BIN) $(C2R_DIR) .TOP_FUNC .MODULES
+#	rm -r $(OBJ)
+#	rm -r $(OBJ)
+#	rm -r $(BIN)
+#	rm -r $(C2R_DIR)
+#	rm .TOP_FUNC
+#	rm .MODULES
+endif
+
+run:
+	$(BINFILE)
+
+runsim:
+	@$(MAKE) run TGT=sim  --no-print-directory
+
+runvvp: $(TARGET_VCD)
+
+
+rebuild:	clean build
+
+
+#make rules
+
+# *.bc <- *.c
+$(BCDIR)/%.bc: %.c
+	@echo "compile(*.bc)...: $< -> $@"
+	$(CC) -c -emit-llvm $(CFLAGS) $(CFLAGS_$*) $< -o $@
+	$(CC) -c -emit-llvm $(CFLAGS) $(CFLAGS_$*) $< -MQ $@ -MM > $(@:.bc=.d)
+
+# *.bc <- *.cpp
+$(BCDIR)/%.bc: %.cpp
+	@echo "compile(*.bc)...: $< -> $@"
+	$(CC) -c -emit-llvm $(CFLAGS) $(CFLAGS_$*) $(CPPFLAGS) $< -o $@
+	$(CC) -c -emit-llvm $(CFLAGS) $(CFLAGS_$*) $(CPPFLAGS) $< -MQ $@ -MM > $(@:.bc=.d)
+
+
+# *.link.bc <- BCS(*.bc list)
+$(LINKED_BC): $(BCS)
+	@echo "link(*.bc)...: $^ -> $@"
+	$(LLVMLINK) $(LLVMLINKFLAGS) $^ -o $@
+	$(LLVMDIS) $@
+
+# *.RTL.c <- *.link.bc
+$(TARGET_RTL): $(LINKED_BC)
+	@echo "opt...: $^ -> $@"
+	$(OPT) $(OPTFLAGS_RTL) $^ -o $(BCDIR)/$(PROJNAME).opt.bc
+	$(LLVMDIS) $(BCDIR)/$(PROJNAME).opt.bc
+ifeq ($(USE_SOC_MODEL), 1)
+	$(OPT) $(OPTFLAGS_SYS) $^ -o $(BCDIR)/$(PROJNAME).opt.sys.bc
+	$(LLVMDIS) $(BCDIR)/$(PROJNAME).opt.sys.bc
+endif
+#ifneq ($(C2RTL_OFF), 1)
+#	@echo "C2R_SUFFIX = $(C2R_SUFFIX), $(RV_NO_FLGS)"
+#	rm -rf $(C2R_DIR)$(C2R_SUFFIX)
+#	cp -r $(C2R_DIR) $(C2R_DIR)$(C2R_SUFFIX)
+#endif
+
+
+# *.opt.bc <- *.link.bc
+$(TARGET_OPT): $(LINKED_BC)
+	@echo "opt...(skip C2R): $^ -> $@"
+	$(OPT) $(OPTFLAGS_OPT) $^ -o $@
+	$(LLVMDIS) $@
+
+# *.o <- *.c
+$(OBJDIR)/%.o: %.c
+	@echo "compile(*.o)...: $< -> $@"
+	$(CC) -c $(CFLAGS) $(CFLAGS_$*) $< -o $@
+	$(CC) -c $(CFLAGS) $(CFLAGS_$*) $< -MQ $@ -MM > $(@:.o=.d)
+
+# *.o <- *.cpp
+$(OBJDIR)/%.o: %.cpp
+	@echo "compile(*.o)...: $< -> $@"
+	$(CC) -c $(CFLAGS) $(CFLAGS_$*) $(CPPFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $(CFLAGS_$*) $(CPPFLAGS) $< -MQ $@ -MM > $(@:.o=.d)
+
+$(TARGET_REL): $(OBJS)
+	@echo "link...: $^ -> $@"
+	$(CC) $(LFLAGS) $^ -o $@
+
+# *.exe <- OBJS
+$(TARGET_SIM): $(OBJS)
+	@echo "link...: $^ -> $@"
+	$(CC) $(LFLAGS) $^ -o $@
+
+# 4/16/18 : *.exe <- OBJS
+$(TARGET_CGEN): $(OBJS)
+	@echo "link & run...: $^ -> $@"
+	$(CC) $(LFLAGS) $^ -o $@
+	$@
+
+
+#The following line means that nothing is done.
+$(C2R_RTL_V_DIR)/%.RTL.v : ;
+
+#The following line means that nothing is done.
+$(C2R_RTL_TB_DIR)/%.TESTBENCH.v : ;
+
+ifeq ($(OLD_C2RTL_VERSION), 1)
+dump_prefix = _dump.log
+else
+dump_prefix = _dump_C0.log
+endif
+
+$(C2R_RTL_TB_DIR)/%$(dump_prefix) :
+	@echo "generate $@"
+	@$(MAKE) build TGT=sim --no-print-directory
+	@$(MAKE) run TGT=sim --no-print-directory
+
+#switch between SOC_MODEL and IP_MODEL (old-version)
+
+$(C2R_RTL_TB_DIR)/%.out : \
+	$(C2R_RTL_V_DIR)/%.RTL.v \
+	$(C2R_RTL_TB_DIR)/%.TESTBENCH.v \
+	$(C2R_RTL_TB_DIR)/%$(dump_prefix)
+	@echo "compile...: $^ -> $@"
+ifeq ($(USE_SOC_MODEL), 1)
+	$(IVERILOG) -o $@ -I $(C2R_RTL_TB_DIR) -I $(C2R_RTL_V_DIR) $(filter %.v,$^) $(SUB_MODULES)
+else
+	$(IVERILOG) -o $@ -I $(C2R_RTL_TB_DIR) -I $(C2R_RTL_V_DIR) $(filter %.v,$^)
+endif
+
+#run vvp
+# *vcd <- *.out
+$(C2R_RTL_TB_DIR)/%.vcd : $(C2R_RTL_TB_DIR)/%.out
+ifeq ($(OS),Windows_NT)
+	cd $(dir $<) &&	@echo %time% && $(VVP) $(notdir $<)
+	@echo %time%
+else
+	cd $(dir $<) &&	time $(VVP) $(notdir $<)
+endif
+
+$(C2R_RTL_TB_DIR)/%.edif : $(C2R_RTL_V_DIR)/%.RTL.v
+	@echo "compile...: $^ -> $@"
+	$(IVERILOG) -S -o $@ -I $(C2R_RTL_TB_DIR) $(filter %.v,$^)
+
+
+#if make is killed or interrupted during the execution of their recipes, the target is not deleted.
+.PRECIOUS :	$(C2R_RTL_V_DIR)/%.RTL.v \
+		$(C2R_RTL_TB_DIR)/%.TESTBENCH.v \
+		$(C2R_RTL_TB_DIR)/%_dump_C0.log \
+		$(C2R_RTL_TB_DIR)/%_dump_C1.log \
+		$(C2R_RTL_TB_DIR)/%_dump.log \
+		$(C2R_RTL_TB_DIR)/%.out
+
+-include $(DEPENDS)
+

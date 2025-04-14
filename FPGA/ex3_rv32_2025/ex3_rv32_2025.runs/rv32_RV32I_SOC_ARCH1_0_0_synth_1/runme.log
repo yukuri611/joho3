@@ -1,0 +1,497 @@
+
+*** Running vivado
+    with args -log rv32_RV32I_SOC_ARCH1_0_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source rv32_RV32I_SOC_ARCH1_0_0.tcl
+
+
+
+****** Vivado v2024.2 (64-bit)
+  **** SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+  **** IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+  **** SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+  **** Start of session at: Thu Apr  3 05:12:38 2025
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source rv32_RV32I_SOC_ARCH1_0_0.tcl -notrace
+create_project: Time (s): cpu = 00:00:14 ; elapsed = 00:00:18 . Memory (MB): peak = 659.895 ; gain = 228.195
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2024.2/data/ip'.
+WARNING: [IP_Flow 19-4995] The host OS only allows 260 characters in a normal path. The IP cache path is more than 80 characters. If you experience issues with IP caching, please consider changing the IP cache to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. 
+Current IP cache path is c:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/ex3_rv32_2025.cache/ip 
+Command: synth_design -top rv32_RV32I_SOC_ARCH1_0_0 -part xc7a100tcsg324-1 -incremental_mode off -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 13168
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1335.191 ; gain = 466.496
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-11145] root scope declaration is not allowed in Verilog 95/2K mode [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step_init_reg_C0.v:1]
+WARNING: [Synth 8-11145] root scope declaration is not allowed in Verilog 95/2K mode [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step_init_reg_C0.v:11]
+INFO: [Synth 8-6157] synthesizing module 'rv32_RV32I_SOC_ARCH1_0_0' [c:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/ex3_rv32_2025.gen/sources_1/bd/rv32/ip/rv32_RV32I_SOC_ARCH1_0_0/synth/rv32_RV32I_SOC_ARCH1_0_0.v:53]
+INFO: [Synth 8-6157] synthesizing module 'RV32I_SOC_ARCH1' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_SOC_ARCH1.RTL.v:415]
+	Parameter M_ID bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'RV32I_SOC_ARCH1_probed' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_SOC_ARCH1.RTL.v:613]
+	Parameter M_ID bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'UART_AXI4L_step' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:470]
+INFO: [Synth 8-6157] synthesizing module 'UART_AXI4L_step_probed' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:542]
+	Parameter M_ID bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'UART_AXI4L_step_no_mem' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:619]
+	Parameter M_ID bound to: 0 - type: integer 
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:807]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:808]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:809]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1105]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1108]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1109]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1573]
+INFO: [Synth 8-6155] done synthesizing module 'UART_AXI4L_step_no_mem' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:619]
+INFO: [Synth 8-6155] done synthesizing module 'UART_AXI4L_step_probed' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:542]
+INFO: [Synth 8-6155] done synthesizing module 'UART_AXI4L_step' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:470]
+INFO: [Synth 8-6157] synthesizing module 'UART_AXI4L_step__parameterized0' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:470]
+	Parameter M_ID bound to: 1 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'UART_AXI4L_step_probed__parameterized0' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:542]
+	Parameter M_ID bound to: 1 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'UART_AXI4L_step_no_mem__parameterized0' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:619]
+	Parameter M_ID bound to: 1 - type: integer 
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:807]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:808]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:809]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1105]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1108]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1109]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1573]
+INFO: [Synth 8-6155] done synthesizing module 'UART_AXI4L_step_no_mem__parameterized0' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:619]
+INFO: [Synth 8-6155] done synthesizing module 'UART_AXI4L_step_probed__parameterized0' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:542]
+INFO: [Synth 8-6155] done synthesizing module 'UART_AXI4L_step__parameterized0' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:470]
+INFO: [Synth 8-6157] synthesizing module 'GPIO_AXI4L_step' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:400]
+INFO: [Synth 8-6157] synthesizing module 'GPIO_AXI4L_step_probed' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:476]
+	Parameter M_ID bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'GPIO_AXI4L_step_no_mem' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:557]
+	Parameter M_ID bound to: 0 - type: integer 
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:771]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:773]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:775]
+INFO: [Synth 8-6155] done synthesizing module 'GPIO_AXI4L_step_no_mem' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:557]
+INFO: [Synth 8-6155] done synthesizing module 'GPIO_AXI4L_step_probed' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:476]
+INFO: [Synth 8-6155] done synthesizing module 'GPIO_AXI4L_step' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:400]
+INFO: [Synth 8-6157] synthesizing module 'RV32I_ARCH1_step' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:781]
+INFO: [Synth 8-6157] synthesizing module 'RV32I_ARCH1_step_probed' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:871]
+	Parameter M_ID bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'RV32I_ARCH1_step_no_mem' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1081]
+	Parameter M_ID bound to: 0 - type: integer 
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:2958]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:2959]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:2961]
+WARNING: [Synth 8-11581] system task call 'write' not supported [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:2962]
+INFO: [Synth 8-6155] done synthesizing module 'RV32I_ARCH1_step_no_mem' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1081]
+INFO: [Synth 8-6157] synthesizing module 'RV32I_ARCH1_step_RAM_BE_INIT_G__this_mem_m' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1015]
+	Parameter M_ID bound to: 0 - type: integer 
+	Parameter MEM_SIZE bound to: 65536 - type: integer 
+	Parameter ADDR_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-3876] $readmem data file 'boot_rv32/G__this_mem_m_0.log' is read successfully [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1032]
+INFO: [Synth 8-3876] $readmem data file 'boot_rv32/G__this_mem_m_1.log' is read successfully [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1033]
+INFO: [Synth 8-3876] $readmem data file 'boot_rv32/G__this_mem_m_2.log' is read successfully [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1034]
+INFO: [Synth 8-3876] $readmem data file 'boot_rv32/G__this_mem_m_3.log' is read successfully [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1035]
+INFO: [Synth 8-6155] done synthesizing module 'RV32I_ARCH1_step_RAM_BE_INIT_G__this_mem_m' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:1015]
+INFO: [Synth 8-6155] done synthesizing module 'RV32I_ARCH1_step_probed' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:871]
+INFO: [Synth 8-6155] done synthesizing module 'RV32I_ARCH1_step' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_ARCH1_step.RTL.v:781]
+INFO: [Synth 8-6157] synthesizing module 'AXI4L_CTRL_1_3__connectChannel' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/AXI4L_CTRL_1_3__connectChannel.RTL.v:549]
+INFO: [Synth 8-6157] synthesizing module 'AXI4L_CTRL_1_3__connectChannel_probed' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/AXI4L_CTRL_1_3__connectChannel.RTL.v:753]
+	Parameter M_ID bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'AXI4L_CTRL_1_3__connectChannel_no_mem' [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/AXI4L_CTRL_1_3__connectChannel.RTL.v:962]
+	Parameter M_ID bound to: 0 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'AXI4L_CTRL_1_3__connectChannel_no_mem' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/AXI4L_CTRL_1_3__connectChannel.RTL.v:962]
+INFO: [Synth 8-6155] done synthesizing module 'AXI4L_CTRL_1_3__connectChannel_probed' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/AXI4L_CTRL_1_3__connectChannel.RTL.v:753]
+INFO: [Synth 8-6155] done synthesizing module 'AXI4L_CTRL_1_3__connectChannel' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/AXI4L_CTRL_1_3__connectChannel.RTL.v:549]
+INFO: [Synth 8-6155] done synthesizing module 'RV32I_SOC_ARCH1_probed' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_SOC_ARCH1.RTL.v:613]
+INFO: [Synth 8-6155] done synthesizing module 'RV32I_SOC_ARCH1' (0#1) [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/RV32I_SOC_ARCH1.RTL.v:415]
+INFO: [Synth 8-6155] done synthesizing module 'rv32_RV32I_SOC_ARCH1_0_0' (0#1) [c:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/ex3_rv32_2025.gen/sources_1/bd/rv32/ip/rv32_RV32I_SOC_ARCH1_0_0/synth/rv32_RV32I_SOC_ARCH1_0_0.v:53]
+WARNING: [Synth 8-6014] Unused sequential element G__this_dbg_rcount_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:902]
+WARNING: [Synth 8-6014] Unused sequential element _p1_CM_657_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1082]
+WARNING: [Synth 8-6014] Unused sequential element _p1_CP_write_command_B01_F2_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1588]
+WARNING: [Synth 8-6014] Unused sequential element _p1_DM_658_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1082]
+WARNING: [Synth 8-6014] Unused sequential element _p1_I_write_command_B01_1_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1091]
+WARNING: [Synth 8-6014] Unused sequential element G__this_cycle_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1330]
+WARNING: [Synth 8-6014] Unused sequential element G__this_dbg_wcount_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/UART_AXI4L_step.RTL.v:1342]
+WARNING: [Synth 8-6014] Unused sequential element G__this_cycle_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:696]
+WARNING: [Synth 8-6014] Unused sequential element _p1_CP_fsmRead_B11_F1_B12_F1_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:981]
+WARNING: [Synth 8-6014] Unused sequential element _p1_CP_fsmWrite_B13_F2_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:983]
+WARNING: [Synth 8-6014] Unused sequential element _p1_CP_fsmWrite_B22_F2_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:984]
+WARNING: [Synth 8-6014] Unused sequential element _p1_I_devWrite_0_B1_1_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:995]
+WARNING: [Synth 8-6014] Unused sequential element _p1_G_axi_wdat_m_data_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:998]
+WARNING: [Synth 8-6014] Unused sequential element _p1_DFB_G__this_clk_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:1000]
+WARNING: [Synth 8-6014] Unused sequential element G__this_dbg_rcount_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:924]
+WARNING: [Synth 8-6014] Unused sequential element G__this_dbg_wcount_reg was removed.  [C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/RTL_V/GPIO_AXI4L_step.RTL.v:926]
+WARNING: [Synth 8-7137] Register G__this_rf_xreg_reg in module RV32I_ARCH1_step_no_mem has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code 
+WARNING: [Synth 8-4767] Trying to implement RAM 'G__this_rf_xreg_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM is sensitive to asynchronous reset signal. this RTL style is not supported. 
+RAM "G__this_rf_xreg_reg" dissolved into registers
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[31] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[30] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[29] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[28] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[27] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[26] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[25] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[24] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[23] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[22] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[21] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[20] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[19] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[18] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[17] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[16] in module UART_AXI4L_step_no_mem is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:16 ; elapsed = 00:00:20 . Memory (MB): peak = 1511.523 ; gain = 642.828
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 1511.523 ; gain = 642.828
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 1511.523 ; gain = 642.828
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.217 . Memory (MB): peak = 1511.523 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1601.109 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.210 . Memory (MB): peak = 1601.109 ; gain = 0.000
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:33 ; elapsed = 00:00:39 . Memory (MB): peak = 1601.109 ; gain = 732.414
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:33 ; elapsed = 00:00:39 . Memory (MB): peak = 1601.109 ; gain = 732.414
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:39 . Memory (MB): peak = 1601.109 ; gain = 732.414
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:38 ; elapsed = 00:00:44 . Memory (MB): peak = 1601.109 ; gain = 732.414
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input   33 Bit       Adders := 3     
+	   2 Input   32 Bit       Adders := 5     
+	   3 Input   17 Bit       Adders := 4     
+	   2 Input   17 Bit       Adders := 1     
+	   2 Input   16 Bit       Adders := 4     
+	   2 Input    6 Bit       Adders := 1     
+	   2 Input    5 Bit       Adders := 10    
+	   3 Input    5 Bit       Adders := 4     
+	   2 Input    4 Bit       Adders := 15    
+	   2 Input    3 Bit       Adders := 1     
+	   2 Input    2 Bit       Adders := 1     
++---XORs : 
+	   2 Input     32 Bit         XORs := 4     
+	   2 Input      8 Bit         XORs := 3     
+	   2 Input      7 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 5     
++---Registers : 
+	               32 Bit    Registers := 86    
+	               16 Bit    Registers := 10    
+	               15 Bit    Registers := 3     
+	               13 Bit    Registers := 2     
+	               12 Bit    Registers := 4     
+	                8 Bit    Registers := 22    
+	                7 Bit    Registers := 3     
+	                6 Bit    Registers := 1     
+	                5 Bit    Registers := 2     
+	                4 Bit    Registers := 26    
+	                3 Bit    Registers := 11    
+	                2 Bit    Registers := 26    
+	                1 Bit    Registers := 142   
++---RAMs : 
+	             512K Bit	(65536 X 8 bit)          RAMs := 4     
++---Muxes : 
+	   2 Input   32 Bit        Muxes := 181   
+	   4 Input   32 Bit        Muxes := 1     
+	   2 Input   31 Bit        Muxes := 1     
+	   2 Input   17 Bit        Muxes := 3     
+	   2 Input   16 Bit        Muxes := 13    
+	   2 Input   15 Bit        Muxes := 1     
+	   2 Input   14 Bit        Muxes := 5     
+	   3 Input   14 Bit        Muxes := 1     
+	   2 Input   13 Bit        Muxes := 2     
+	   2 Input   12 Bit        Muxes := 5     
+	   8 Input   12 Bit        Muxes := 1     
+	   2 Input    9 Bit        Muxes := 2     
+	   2 Input    8 Bit        Muxes := 22    
+	   3 Input    8 Bit        Muxes := 4     
+	   2 Input    7 Bit        Muxes := 12    
+	   3 Input    7 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 3     
+	   2 Input    5 Bit        Muxes := 42    
+	   9 Input    5 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 75    
+	   2 Input    3 Bit        Muxes := 24    
+	   2 Input    2 Bit        Muxes := 61    
+	   3 Input    2 Bit        Muxes := 6     
+	   4 Input    2 Bit        Muxes := 4     
+	   2 Input    1 Bit        Muxes := 82    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[31] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[30] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[29] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[28] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[27] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[26] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[25] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[24] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[23] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[22] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[21] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[20] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[19] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[18] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[17] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[16] in module UART_AXI4L_step__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[31] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[30] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[29] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[28] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[27] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[26] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[25] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[24] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[23] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[22] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[21] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[20] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[19] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[18] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[17] in module UART_AXI4L_step is either unconnected or has no load
+WARNING: [Synth 8-7129] Port G_axi_wdat_m_data[16] in module UART_AXI4L_step is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:38 ; elapsed = 00:02:55 . Memory (MB): peak = 1802.535 ; gain = 933.840
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping Report (see note below)
++------------+-------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object        | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|\inst/M0    | M3/M0/M1/mem1_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
+|\inst/M0    | M3/M0/M1/mem2_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
+|\inst/M0    | M3/M0/M1/mem3_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
+|\inst/M0    | M3/M0/M1/mem0_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
++------------+-------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:51 ; elapsed = 00:03:09 . Memory (MB): peak = 1802.535 ; gain = 933.840
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:03:08 ; elapsed = 00:03:28 . Memory (MB): peak = 1802.535 ; gain = 933.840
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping Report
++------------+-------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object        | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|\inst/M0    | M3/M0/M1/mem1_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
+|\inst/M0    | M3/M0/M1/mem2_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
+|\inst/M0    | M3/M0/M1/mem3_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
+|\inst/M0    | M3/M0/M1/mem0_reg | 64 K x 8(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 16     | 
++------------+-------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_4 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_6 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem1_reg_1_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_4 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_6 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem2_reg_1_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_4 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_6 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem3_reg_1_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_4 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_6 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/M0/M3/M0/M1/mem0_reg_1_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:03:20 ; elapsed = 00:03:41 . Memory (MB): peak = 1895.453 ; gain = 1026.758
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:03:27 ; elapsed = 00:03:49 . Memory (MB): peak = 1935.613 ; gain = 1066.918
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:03:27 ; elapsed = 00:03:49 . Memory (MB): peak = 1935.613 ; gain = 1066.918
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 1935.613 ; gain = 1066.918
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 1935.613 ; gain = 1066.918
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 1940.621 ; gain = 1071.926
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 1940.621 ; gain = 1071.926
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |CARRY4   |   149|
+|2     |LUT1     |    41|
+|3     |LUT2     |   417|
+|4     |LUT3     |   413|
+|5     |LUT4     |   708|
+|6     |LUT5     |   537|
+|7     |LUT6     |  2862|
+|8     |MUXF7    |   498|
+|9     |MUXF8    |    84|
+|10    |RAMB36E1 |    64|
+|43    |FDCE     |  2136|
+|44    |FDPE     |    16|
+|45    |FDRE     |  1024|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 1940.621 ; gain = 1071.926
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 33 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:03:05 ; elapsed = 00:03:44 . Memory (MB): peak = 1940.621 ; gain = 982.340
+Synthesis Optimization Complete : Time (s): cpu = 00:03:28 ; elapsed = 00:03:50 . Memory (MB): peak = 1940.621 ; gain = 1071.926
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.154 . Memory (MB): peak = 1949.875 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 795 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'rv32_RV32I_SOC_ARCH1_0_0' is not ideal for floorplanning, since the cellview 'RV32I_ARCH1_step_no_mem' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1954.969 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: e7ccceb6
+INFO: [Common 17-83] Releasing license: Synthesis
+92 Infos, 92 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:03:37 ; elapsed = 00:04:08 . Memory (MB): peak = 1954.969 ; gain = 1279.938
+INFO: [Coretcl 2-1174] Renamed 18 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.031 . Memory (MB): peak = 1954.969 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/isshi/Documents/Lectures/ex3/ex3_2025/FPGA/ex3_rv32_2025/ex3_rv32_2025.runs/rv32_RV32I_SOC_ARCH1_0_0_synth_1/rv32_RV32I_SOC_ARCH1_0_0.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file rv32_RV32I_SOC_ARCH1_0_0_utilization_synth.rpt -pb rv32_RV32I_SOC_ARCH1_0_0_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Apr  3 05:17:17 2025...

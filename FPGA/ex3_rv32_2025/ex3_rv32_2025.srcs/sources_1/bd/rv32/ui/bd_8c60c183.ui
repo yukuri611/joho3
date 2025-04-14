@@ -1,0 +1,63 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.933496",
+   "Default View_TopLeft":"-196,-139",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.8.0 2024-04-26 e1825d835c VDI=44 GEI=38 GUI=JA:21.0
+#  -string -flagsOSRD
+preplace port port-id_sys_clock -pg 1 -lvl 0 -x 0 -y 120 -defaultsOSRD
+preplace port port-id_rst_n -pg 1 -lvl 0 -x 0 -y 140 -defaultsOSRD
+preplace port port-id_G_io_uart_0_rx -pg 1 -lvl 0 -x 0 -y 220 -defaultsOSRD
+preplace port port-id_G_io_uart_0_cts -pg 1 -lvl 0 -x 0 -y 240 -defaultsOSRD
+preplace port port-id_G_io_uart_1_rx -pg 1 -lvl 0 -x 0 -y 260 -defaultsOSRD
+preplace port port-id_G_io_uart_1_cts -pg 1 -lvl 0 -x 0 -y 280 -defaultsOSRD
+preplace port port-id_G_io_intr_p_2 -pg 1 -lvl 0 -x 0 -y 320 -defaultsOSRD
+preplace port port-id_G_io_intr_p_3 -pg 1 -lvl 0 -x 0 -y 340 -defaultsOSRD
+preplace port port-id_G_io_intr_p_4 -pg 1 -lvl 0 -x 0 -y 360 -defaultsOSRD
+preplace port port-id_G_io_intr_p_5 -pg 1 -lvl 0 -x 0 -y 380 -defaultsOSRD
+preplace port port-id_G_io_intr_p_6 -pg 1 -lvl 0 -x 0 -y 400 -defaultsOSRD
+preplace port port-id_G_io_uart_0_tx -pg 1 -lvl 5 -x 1220 -y 220 -defaultsOSRD
+preplace port port-id_G_io_uart_0_rts -pg 1 -lvl 5 -x 1220 -y 240 -defaultsOSRD
+preplace port port-id_G_io_uart_1_tx -pg 1 -lvl 5 -x 1220 -y 260 -defaultsOSRD
+preplace port port-id_G_io_uart_1_rts -pg 1 -lvl 5 -x 1220 -y 280 -defaultsOSRD
+preplace port port-id_G_RV32I_SOC_ARCH1_OUT -pg 1 -lvl 5 -x 1220 -y 360 -defaultsOSRD
+preplace portBus G_io_gpio_sw_in -pg 1 -lvl 0 -x 0 -y 300 -defaultsOSRD
+preplace portBus G_io_gpio_seg7_dout -pg 1 -lvl 5 -x 1220 -y 300 -defaultsOSRD
+preplace portBus G_io_gpio_seg7_an -pg 1 -lvl 5 -x 1220 -y 320 -defaultsOSRD
+preplace portBus G_io_gpio_led_out -pg 1 -lvl 5 -x 1220 -y 340 -defaultsOSRD
+preplace inst RV32I_SOC_ARCH1_0 -pg 1 -lvl 4 -x 990 -y 290 -defaultsOSRD
+preplace inst clk_wiz -pg 1 -lvl 2 -x 420 -y 70 -defaultsOSRD
+preplace inst reset_gen_0 -pg 1 -lvl 3 -x 650 -y 140 -defaultsOSRD
+preplace inst reset_inv_0 -pg 1 -lvl 1 -x 170 -y 60 -defaultsOSRD
+preplace netloc G_io_gpio_sw_in_1 1 0 4 NJ 300 NJ 300 NJ 300 NJ
+preplace netloc G_io_intr_p_2_1 1 0 4 NJ 320 NJ 320 NJ 320 NJ
+preplace netloc G_io_intr_p_3_1 1 0 4 NJ 340 NJ 340 NJ 340 NJ
+preplace netloc G_io_intr_p_4_1 1 0 4 NJ 360 NJ 360 NJ 360 NJ
+preplace netloc G_io_intr_p_5_1 1 0 4 NJ 380 NJ 380 NJ 380 NJ
+preplace netloc G_io_intr_p_6_1 1 0 4 NJ 400 NJ 400 NJ 400 NJ
+preplace netloc G_io_uart_0_cts_1 1 0 4 NJ 240 NJ 240 NJ 240 NJ
+preplace netloc G_io_uart_0_rx_1 1 0 4 NJ 220 NJ 220 NJ 220 NJ
+preplace netloc G_io_uart_1_cts_1 1 0 4 NJ 280 NJ 280 NJ 280 NJ
+preplace netloc G_io_uart_1_rx_1 1 0 4 NJ 260 NJ 260 NJ 260 NJ
+preplace netloc RV32I_SOC_ARCH1_0_G_RV32I_SOC_ARCH1_OUT 1 4 1 NJ 360
+preplace netloc RV32I_SOC_ARCH1_0_G_io_gpio_led_out 1 4 1 NJ 340
+preplace netloc RV32I_SOC_ARCH1_0_G_io_gpio_seg7_an 1 4 1 NJ 320
+preplace netloc RV32I_SOC_ARCH1_0_G_io_gpio_seg7_dout 1 4 1 NJ 300
+preplace netloc RV32I_SOC_ARCH1_0_G_io_uart_0_rts 1 4 1 NJ 240
+preplace netloc RV32I_SOC_ARCH1_0_G_io_uart_0_tx 1 4 1 NJ 220
+preplace netloc RV32I_SOC_ARCH1_0_G_io_uart_1_rts 1 4 1 NJ 280
+preplace netloc RV32I_SOC_ARCH1_0_G_io_uart_1_tx 1 4 1 NJ 260
+preplace netloc clk_wiz_clk_out1 1 2 2 530 60 780J
+preplace netloc clk_wiz_locked 1 2 1 510 80n
+preplace netloc reset_gen_0_rst_n_locked 1 3 1 770 140n
+preplace netloc reset_inv_0_Res 1 1 1 NJ 60
+preplace netloc rst_n_1 1 0 3 20 140 NJ 140 NJ
+preplace netloc sys_clock_1 1 0 2 NJ 120 320J
+levelinfo -pg 1 0 170 420 650 990 1220
+pagesize -pg 1 -db -bbox -sgen -200 0 1470 460
+"
+}
+{
+   "da_board_cnt":"2",
+   "da_clkrst_cnt":"1"
+}
