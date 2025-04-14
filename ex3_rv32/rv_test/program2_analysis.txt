@@ -1,0 +1,11 @@
+store_int
+
+レジスタ
+s0: rx_pos
+s1: 改行文字（\n）
+s2: rx_bufの先頭アドレス
+s4: buffer
+
+
+main
+    1174:	2c0000ef          	jal	1434 <printf>  

@@ -1,0 +1,103 @@
+
+temp.out:     file format elf32-littleriscv
+
+Disassembly of section .text:
+
+00001044 <store_int>:
+    1044:	fd010113          	addi	sp,sp,-48 # 23fd0 <_end+0x1fd0>　　
+    1048:	02112623          	sw	ra,44(sp)
+    104c:	02812423          	sw	s0,40(sp)
+    1050:	02912223          	sw	s1,36(sp)
+    1054:	03212023          	sw	s2,32(sp)
+    1058:	01312e23          	sw	s3,28(sp)
+    105c:	01412c23          	sw	s4,24(sp)
+    1060:	01512a23          	sw	s5,20(sp)
+    1064:	00050a93          	mv	s5,a0
+    1068:	00000413          	li	s0,0
+    106c:	000219b7          	lui	s3,0x21
+    1070:	00410913          	addi	s2,sp,4
+    1074:	00a00493          	li	s1,10 //改行文字をs1にセット
+    1078:	00800a13          	li	s4,8
+    107c:	5609a783          	lw	a5,1376(s3) # 21560 <io_getch>
+    1080:	000780e7          	jalr	a5 //
+    1084:	00140413          	addi	s0,s0,1 //rx_posを1増やす
+    1088:	008907b3          	add	a5,s2,s0　// rx_buf の先頭アドレス + rx_pos を計算
+    108c:	fea78fa3          	sb	a0,-1(a5) // 取得した文字を rx_buf[rx_pos-1] に保存
+    1090:	04950663          	beq	a0,s1,10dc <store_int+0x98>  // もし取得した文字が改行('\n'=10)ならブランチ
+    1094:	ff4414e3          	bne	s0,s4,107c <store_int+0x38> // rx_pos が s4（バッファサイズ）と等しくなければループ継続
+    1098:	00010623          	sb	zero,12(sp) //改行処理を行う
+    109c:	000217b7          	lui	a5,0x21
+    10a0:	5647a783          	lw	a5,1380(a5) # 21564 <io_putch>
+    10a4:	00a00513          	li	a0,10
+    10a8:	000780e7          	jalr	a5
+    10ac:	00410513          	addi	a0,sp,4 //入力された文字列をint型で保存
+    10b0:	7e9010ef          	jal	3098 <atoi>
+    10b4:	00aaa023          	sw	a0,0(s5)
+    10b8:	02c12083          	lw	ra,44(sp)
+    10bc:	02812403          	lw	s0,40(sp)
+    10c0:	02412483          	lw	s1,36(sp)
+    10c4:	02012903          	lw	s2,32(sp)
+    10c8:	01c12983          	lw	s3,28(sp)
+    10cc:	01812a03          	lw	s4,24(sp)
+    10d0:	01412a83          	lw	s5,20(sp)
+    10d4:	03010113          	addi	sp,sp,48
+    10d8:	00008067          	ret
+    10dc:	01040793          	addi	a5,s0,16 //以下文字列の末尾にヌル文字をセット
+    10e0:	00278433          	add	s0,a5,sp
+    10e4:	fe040a23          	sb	zero,-12(s0)
+    10e8:	fc5ff06f          	j	10ac <store_int+0x68>
+
+000010ec <main>:
+    10ec:	fc010113          	addi	sp,sp,-64
+    10f0:	02112e23          	sw	ra,60(sp)
+    10f4:	02812c23          	sw	s0,56(sp)
+    10f8:	02912a23          	sw	s1,52(sp)
+    10fc:	03212823          	sw	s2,48(sp)
+    1100:	03312623          	sw	s3,44(sp)
+    1104:	03412423          	sw	s4,40(sp)
+    1108:	03512223          	sw	s5,36(sp)
+    110c:	03612023          	sw	s6,32(sp)
+    1110:	01712e23          	sw	s7,28(sp)
+    1114:	01812c23          	sw	s8,24(sp)
+    1118:	00020bb7          	lui	s7,0x20
+    111c:	00810b13          	addi	s6,sp,8
+    1120:	00020ab7          	lui	s5,0x20
+    1124:	00020a37          	lui	s4,0x20
+    1128:	00c10993          	addi	s3,sp,12
+    112c:	00020937          	lui	s2,0x20
+    1130:	00020c37          	lui	s8,0x20
+    1134:	03c0006f          	j	1170 <main+0x84>
+    1138:	00040593          	mv	a1,s0 //(b!=0)内の命令
+    113c:	00048513          	mv	a0,s1
+    1140:	5c9010ef          	jal	2f08 <__divsi3>
+    1144:	00050593          	mv	a1,a0
+    1148:	00020537          	lui	a0,0x20
+    114c:	2ec50513          	addi	a0,a0,748 # 202ec <__clz_tab+0x128>
+    1150:	2e4000ef          	jal	1434 <printf> //print result of division
+    1154:	00040593          	mv	a1,s0
+    1158:	00048513          	mv	a0,s1
+    115c:	631010ef          	jal	2f8c <__modsi3>
+    1160:	00050593          	mv	a1,a0
+    1164:	00020537          	lui	a0,0x20
+    1168:	2fc50513          	addi	a0,a0,764 # 202fc <__clz_tab+0x138>
+    116c:	2c8000ef          	jal	1434 <printf> //print result of mod
+    1170:	2c4b8513          	addi	a0,s7,708 # 202c4 <__clz_tab+0x100> //beginning of while loop
+    1174:	2c0000ef          	jal	1434 <printf> //printf("Number A: ");
+    1178:	000b0513          	mv	a0,s6
+    117c:	ec9ff0ef          	jal	1044 <store_int>
+    1180:	00812483          	lw	s1,8(sp)
+    1184:	00048593          	mv	a1,s1
+    1188:	2d0a8513          	addi	a0,s5,720 # 202d0 <__clz_tab+0x10c>
+    118c:	2a8000ef          	jal	1434 <printf> //printf("a: ");
+    1190:	2d8a0513          	addi	a0,s4,728 # 202d8 <__clz_tab+0x114>
+    1194:	2a0000ef          	jal	1434 <printf> //printf("Number B: ");
+    1198:	00098513          	mv	a0,s3
+    119c:	ea9ff0ef          	jal	1044 <store_int>
+    11a0:	00c12403          	lw	s0,12(sp)
+    11a4:	00040593          	mv	a1,s0
+    11a8:	2e490513          	addi	a0,s2,740 # 202e4 <__clz_tab+0x120>
+    11ac:	288000ef          	jal	1434 <printf> //printf("b: %d\n", b);
+    11b0:	f80414e3          	bnez	s0,1138 <main+0x4c> //if (b != 0) jump to 1138
+    11b4:	310c0513          	addi	a0,s8,784 # 20310 <__clz_tab+0x14c>
+    11b8:	21c000ef          	jal	13d4 <puts>
+    11bc:	fb5ff06f          	j	1170 <main+0x84>

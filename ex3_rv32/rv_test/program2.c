@@ -12,21 +12,27 @@ int main() {
 #if defined(NATIVE_MODE)
     printf("do nothing...\n");
 #else
-    int a;
-    printf("Number A: ");
-    store_int(&a);
-    printf("a: %d\n", a);
+    while(1) {
+        int a;
+        printf("Number A: ");
+        store_int(&a);
+        printf("a: %d\n", a);
 
-    int b;
-    printf("Number B: ");
-    store_int(&b);
-    printf("b: %d\n", b);
+        int b;
+        printf("Number B: ");
+        store_int(&b);
+        printf("b: %d\n", b);
 
-    printf("result + : %d\n", a + b);
-    printf("result - : %d\n", a - b);
-    printf("result * : %d\n", a * b);
-    printf("result / : %d\n", a / b);
-    printf("mod result : %d\n", a % b);
+        if (b != 0) {
+            printf("result / : %d\n", a / b);
+            printf("mod result : %d\n", a % b);
+        }
+        else {
+            printf("Error. Cannot divide with 0\n");
+        }
+    }
+
+    
 
 #endif
     return 0;
