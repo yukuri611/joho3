@@ -83,7 +83,7 @@ Symbol Table (.symtab):
 | 20|                                           |00000000|00000000|LOCAL |SECTION|DEFAULT  |(.debug_line)
 | 21|                                           |00000000|00000000|LOCAL |SECTION|DEFAULT  |(.debug_str)
 | 22|                                           |00000000|00000000|LOCAL |SECTION|DEFAULT  |(.debug_line_str)
-| 23|ccc7FiJj.o                                 |00000000|00000000|LOCAL |FILE   |DEFAULT  |(ABS)
+| 23|cc4XT0YB.o                                 |00000000|00000000|LOCAL |FILE   |DEFAULT  |(ABS)
 | 24|$xrv32i2p1_a2p1_zicsr2p0_zaamo1p0_zalrsc1p0|00001000|00000000|LOCAL |NOTYPE |DEFAULT  |(.text)
 | 25|stack_bot                                  |00024000|00000000|LOCAL |NOTYPE |DEFAULT  |(.stack)
 | 26|stack_top                                  |00022000|00000000|LOCAL |NOTYPE |DEFAULT  |(.stack)
@@ -98,7 +98,7 @@ Symbol Table (.symtab):
 | 35|UART_CHAN_ID                               |000217fc|00000004|LOCAL |OBJECT |DEFAULT  |(.bss)
 | 36|critical_section_depth                     |000217f4|00000004|LOCAL |OBJECT |DEFAULT  |(.bss)
 | 37|prv_mstatus                                |000217f8|00000004|LOCAL |OBJECT |DEFAULT  |(.bss)
-| 38|cc78CeCP.o                                 |00000000|00000000|LOCAL |FILE   |DEFAULT  |(ABS)
+| 38|ccg2Xile.o                                 |00000000|00000000|LOCAL |FILE   |DEFAULT  |(ABS)
 | 39|$xrv32i2p1_a2p1_zicsr2p0_zaamo1p0_zalrsc1p0|000022c0|00000000|LOCAL |NOTYPE |DEFAULT  |(.text)
 | 40|libgcc2.c                                  |00000000|00000000|LOCAL |FILE   |DEFAULT  |(ABS)
 | 41|$xrv32i2p1_a2p1_zicsr2p0_zaamo1p0_zalrsc1p0|00002350|00000000|LOCAL |NOTYPE |DEFAULT  |(.text)
@@ -841,7 +841,7 @@ Image(Section:                        .rodata) : addr(00020000 - 00020459) [   A
 00020280:|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08
 000202a0:|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08|08 08 08 08
 000202c0:|08 08 08 08|4e 75 6d 62|65 72 20 41|3a 20 00 00|61 3a 20 25|64 0a 00 00|4e 75 6d 62|65 72 20 42
-000202e0:|3a 20 00 00|62 3a 20 25|64 0a 00 00|72 65 73 75|6c 74 20 2f|20 3a 20 25|64 0a 00 00|6d 6f 64 20
+000202e0:|3a 20 00 00|62 3a 20 25|64 0a 00 00|72 65 73 75|6c 74 20 2f|20 3a 20 25|66 0a 00 00|6d 6f 64 20
 00020300:|72 65 73 75|6c 74 20 3a|20 25 64 0a|00 00 00 00|45 72 72 6f|72 2e 20 43|61 6e 6e 6f|74 20 64 69
 00020320:|76 69 64 65|20 77 69 74|68 20 30 00|50 52 4f 46|49 4c 45 20|3a 20 25 64|20 63 79 63|6c 65 73 2c
 00020340:|20 25 64 20|69 6e 73 74|73 2c 20 25|64 20 75 73|65 63 73 0a|00 00 00 00|00 20 20 20|20 20 20 20

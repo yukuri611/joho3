@@ -157,7 +157,7 @@ void enable_UART_interrupt() {
 	sysctrl->irq_enable |= 3;	///	set sysctrl->irq_enable |= 0x00000003; (enable uart1/uart0 interrupts)
 	asm volatile("csrs mie, %[new]" : : [new] "r" (0x00000800));	///	set meie[11] : machine-external-interrupt-enable
 	asm volatile("csrs mstatus, 0x0008" : : );	///	set mie[3]   : machine-interrupt-enable
-	asm volatile("csrw mtvec, %[new]" : : [new] "r" (_mhandler));
+	asm volatile("csrw mtvec, %[new]" : : [new] "r" (_mhandler)); //mtvecレジスタに、_mhandler（割り込みハンドラ）のアドレスを設定
  }
 
 void disable_UART_interrupt() {

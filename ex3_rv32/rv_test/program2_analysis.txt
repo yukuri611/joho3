@@ -9,3 +9,92 @@ s4: buffer
 
 main
     1174:	2c0000ef          	jal	1434 <printf>  
+
+
+
+フローチャート(main関数)
+
+[Start]
+   |
+   v
+[Initialize stack & save registers]
+   |
+   v
+┌────────────────────────────┐
+|         LOOP START         |
+└────────────────────────────┘
+   |
+   v
+[printf("Number A: ")]
+   |
+   v
+[store_int(&a)]
+   |
+   v
+[printf("a: %d", a)]
+   |
+   v
+[printf("Number B: ")]
+   |
+   v
+[store_int(&b)]
+   |
+   v
+[printf("b: %d", b)]
+   |
+   v
+ ┌───── b != 0 ? ─────┐
+ |         YES        |           NO
+ v                   v
+[a / b 計算]       [puts("Division by 0")]
+[printf result]        
+[a % b 計算]         
+[printf result]       
+   |
+   v
+[Loop back to start]
+
+
+
+フローチャート(store_int関数)
+
+[Start: store_int(a0)]
+   |
+   v
+[Initialize stack and save registers]
+   |
+   v
+[Set rx_pos = 0, set newline = 10, set buffer pointer]
+   |
+   v
+┌────────────────────────────┐
+|        LOOP START          |
+|  Get one char via io_getch |
+|  Store it in rx_buf        |
+└────────────────────────────┘
+   |
+   v
+[ch == '\n'?]───Yes───> [break loop]
+   |
+   No
+   |
+   v
+[rx_pos == 8?]───Yes───> [break loop + output '\n']
+   |
+   No
+   |
+   └───> [Loop back for next char]
+
+(break後の処理)
+   |
+   v
+[Add NULL terminator to rx_buf]
+   |
+   v
+[Call atoi(rx_buf)]
+   |
+   v
+[Store result at *a0]
+   |
+   v
+[Restore registers and return]

@@ -15,7 +15,7 @@ int main() {
     printf("do nothing...\n");
 #else
     set_mtimer_interval(10/*msec*/);
-    timer_interrupt_hook = timer_handler;
+    timer_interrupt_hook = timer_handler; //上で設定した時間ごとにtimer_handlerを実行
     enable_timer_interrupt();
     int timer_on = 1;
     printf("timer on\n");

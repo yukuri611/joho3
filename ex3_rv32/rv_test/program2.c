@@ -24,7 +24,7 @@ int main() {
         printf("b: %d\n", b);
 
         if (b != 0) {
-            printf("result / : %d\n", a / b);
+            printf("result / : %f\n", a / b);
             printf("mod result : %d\n", a % b);
         }
         else {

@@ -4552,7 +4552,7 @@ Disassembly of section .rodata:
    202f2:	2f20                	.insn	2, 0x2f20
    202f4:	3a20                	.insn	2, 0x3a20
    202f6:	2520                	.insn	2, 0x2520
-   202f8:	0a64                	.insn	2, 0x0a64
+   202f8:	0a66                	.insn	2, 0x0a66
    202fa:	0000                	.insn	2, 0x
    202fc:	6f6d                	.insn	2, 0x6f6d
    202fe:	2064                	.insn	2, 0x2064
