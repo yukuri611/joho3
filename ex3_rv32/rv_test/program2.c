@@ -4,6 +4,7 @@
 #include "io.h"
 
 #define BUF_SIZE  9
+#define BACK_SPACE_CODE  0x08
 
 
 void store_int(int*, int*);
@@ -17,30 +18,28 @@ int main() {
     int terminated = 0;
     while(!terminated) {
         int a;
-        printf("Number A: ");
+        printf("Number A: \n");
         store_int(&a, &terminated);
         if (terminated) break;
-        printf("a: %d\n", a);
+        printf("a: %d\n\n", a);
 
         int b;
-        printf("Number B: ");
+        printf("Number B: \n");
         store_int(&b, &terminated);
         if (terminated) break;
-        printf("b: %d\n", b);
+        printf("b: %d\n\n", b);
 
         if (b != 0) {
-            printf("result / : %f\n", (float)a/b);
-            printf("mod result : %d\n", a % b);
+            printf("Division result: %f\n", (float)a/b);
+            printf("Mod result: %d\n\n", a % b);
         }
         else {
-            printf("Error. Cannot divide with 0\n");
+            printf("Error. Cannot divide with 0\n\n");
         }
     }
     printf("End program\n");
 
     end_profiler();
-    
-
 #endif
     return 0;
 }
@@ -52,8 +51,13 @@ void store_int(int* store, int* terminated) {
     int rx_pos = 0;
     while (1) {
         char ch = io_getch(); //teratermに入力された数値(char型)1つを取得
-        
-        rx_buf[rx_pos++] = ch; //bufferに保存
+        if (ch == BACK_SPACE_CODE) { //back_spaceが入力されたとき、1文字消去する
+            if (rx_pos != 0) {
+                rx_buf[rx_pos] = 0;
+                rx_pos -= 1;
+            }
+            continue;
+        }
 
         if (ch == TERMINATE_CODE) {
             rx_buf[rx_pos] = 0;
@@ -61,6 +65,8 @@ void store_int(int* store, int* terminated) {
             *terminated = 1;
             break;
         }
+
+        rx_buf[rx_pos++] = ch; //bufferに保存
 
         //改行入力か、bufferの最後（終端文字分を除く）まで到達したとき、while文を抜ける
         if (ch == '\n' || rx_pos == BUF_SIZE - 1) {
