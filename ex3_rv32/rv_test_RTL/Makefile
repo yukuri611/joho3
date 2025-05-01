@@ -1,4 +1,4 @@
-SRC = test_rv32_1b
+SRC = test_rv32_3
 #SRC = t4b
 SRC_C = $(SRC).c
 

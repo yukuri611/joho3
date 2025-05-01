@@ -115,7 +115,7 @@
     1174:	01812c23          	sw	s8,24(sp)
     1178:	01912a23          	sw	s9,20(sp)
 
-    117c:	31c010ef          	jal	2498 <start_profiler>   # start_profiler()
+    117c:	31c010ef          	jal	2498 <start_profiler>   # start_profiler()の呼び出し
     1180:	00012623          	sw	zero,12(sp)     # terminated = 0
 
 #ループ開始
