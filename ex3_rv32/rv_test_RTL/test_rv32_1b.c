@@ -22,7 +22,7 @@ int main() {
         WFI_BREAK;
         MULT_INT(b, a, a);
         sum += b;
-        //sum += a * a;
+        // sum += a * a;
     }
     end_profiler();
 #if !defined(NATIVE_MODE)

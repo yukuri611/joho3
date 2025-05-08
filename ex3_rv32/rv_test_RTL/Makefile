@@ -1,4 +1,4 @@
-SRC = test_rv32_3
+SRC = test_rv32_1b_copy
 #SRC = t4b
 SRC_C = $(SRC).c
 
@@ -6,7 +6,7 @@ DIR_CC=~/tools/rv32ia/bin
 CC=$(DIR_CC)/riscv32-unknown-elf-gcc
 LD=$(DIR_CC)/riscv32-unknown-elf-ld
 DUMP=$(DIR_CC)/riscv32-unknown-elf-objdump
-CFLAGS=-O1
+CFLAGS=-O0
 
 CFLAGS_RV=-march=rv32iazicsr
 #CFLAGS_RV+= -DTEST_WFI_BREAK

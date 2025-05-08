@@ -339,6 +339,7 @@ output pending;
         b <= b1;
         c <= c1;
     end
+    
     assign pending = MD_type[`MUL] & ((~stt) | (stt & (b1 != 32'b0)));
     assign out = (stt) ? c1 : 32'b0;
 endmodule
