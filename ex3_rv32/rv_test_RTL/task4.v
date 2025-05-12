@@ -13,7 +13,7 @@ wire [6:0] opcode = ir[6:0];
 wire [6:0] funct7 = ir[31:25];
 wire [2:0] funct3 = ir[14:12];
 
-function [10:0] DEC_I; //opcodeを作成
+function [10:0] DEC_I;
     input [6:0] opcode;
     case(opcode)
         7'b0110011: DEC_I = (10'b1 <<`COMP);　//MULはこれ

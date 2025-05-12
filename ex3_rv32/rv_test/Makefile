@@ -1,4 +1,4 @@
-SRC = program2
+SRC = task2
 #SRC = t4b
 SRC_C = $(SRC).c
 
