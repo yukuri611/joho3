@@ -1,4 +1,4 @@
-SRC = withoutUART
+SRC = mancala_with_connection
 #SRC = t4b
 SRC_C = $(SRC).c
 
