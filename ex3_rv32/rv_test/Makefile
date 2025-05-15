@@ -1,4 +1,4 @@
-SRC = task2
+SRC = withoutUART
 #SRC = t4b
 SRC_C = $(SRC).c
 
