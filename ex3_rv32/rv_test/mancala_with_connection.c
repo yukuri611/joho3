@@ -10,8 +10,8 @@
 #define BACK_SPACE_CODE 0x08
 
 // ANSI カラーコード
-#define ANSI_GREEN        "\x1b[32m"
-#define ANSI_BLUE         "\x1b[34m"
+#define ANSI_PLAYER1       "\x1b[38;5;208m"
+#define ANSI_PLAYER2         "\x1b[36m"
 #define ANSI_RESET        "\x1b[0m"
 
 void init_board(int board[]);
@@ -27,7 +27,7 @@ int main(void) {
     init_board(board);
 
     int player    = 1;   // 1 = プレイヤー1, 2 = プレイヤー2
-    int uart_flag = 0;   // 0 → TeraTerm0, 1 → TeraTerm1
+    int uart_flag = 0;   // 0 → TeraTerm0, 1 → TeraTerm1 (TeraTerm0がplayer1, TeraTerm1がplayer2)
     char buf[BUF_SIZE];
     int terminated = 0;
 
@@ -45,7 +45,7 @@ int main(void) {
         set_uart_ID(uart_flag);
 
         // 入力プロンプト
-        const char* color = (player == 1 ? ANSI_GREEN : ANSI_BLUE);
+        const char* color = (player == 1 ? ANSI_PLAYER1 : ANSI_PLAYER2);
         printf("%s>>> Player %d の手番です。ポケット1～6を選択してください：%s",
                color, player, ANSI_RESET);
 
@@ -111,22 +111,29 @@ void init_board(int board[]) {
 }
 
 void print_board(int b[], int perspective, int current_player) {
-    // 枠線＋番号行
-    printf("   ┌"); for(int i=0;i<6;i++) printf("────┬"); printf("────┐\n    ");
-    for(int i=0;i<6;i++){int idx=(perspective==1?13-i:6-i); printf(" %2d │",idx);} printf("\n");
-
-    // 上段石数
-    printf("   │"); for(int i=0;i<6;i++){int idx=(perspective==1?13-i:6-i); printf(" %2d │",b[idx]);} printf("\n");
+    // 上段
+    printf("\n");
+    if (perspective == 1) {
+        printf("%s player2側\n%s", ANSI_PLAYER2, ANSI_RESET);
+    }
+    else {
+        printf("%s player1側\n%s", ANSI_PLAYER1, ANSI_RESET);
+    }
+    printf("    │"); for(int i=0;i<6;i++){int idx=(perspective==1?13-i:6-i); printf(" %2d  │",b[idx]);} printf("\n");
 
     // ゴール行
     int lg=(perspective==1?b[14]:b[7]), rg=(perspective==1?b[7]:b[14]);
-    printf(" %2d └",lg); for(int i=0;i<6;i++) printf("────┴"); printf("────┘ %2d\n",rg);
+    printf(" %2d ",lg); printf("─────────────────────────────────────"); printf(" %2d  ",rg); printf("\n");
 
-    // 下段石数
-    printf("   │"); for(int i=0;i<6;i++){int idx=(perspective==1?i+1:i+8); printf(" %2d │",b[idx]);} printf("\n");
-
-    // 下段番号
-    printf("    "); for(int i=0;i<6;i++){int idx=(perspective==1?i+1:i+8); printf(" %2d │",idx);} printf("\n   └"); for(int i=0;i<6;i++) printf("────┴"); printf("────┘\n\n");
+    // 下段
+    printf("    │"); for(int i=0;i<6;i++){int idx=(perspective==1?i+1:i+8); printf(" %2d  │",b[idx]);} printf("\n");
+    if (perspective == 1) {
+        printf("%s player1側\n%s", ANSI_PLAYER1, ANSI_RESET);
+    }
+    else {
+        printf("%s player2側\n%s", ANSI_PLAYER2, ANSI_RESET);
+    }
+    printf("\n");
 }
 
 int is_game_over(int b[]) {
