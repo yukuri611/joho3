@@ -1,28 +1,15 @@
-// mancala_console_uart.c
-// 改良版：枠線・番号・カラー強調で遊びやすさアップ + 入力間にメッセージ追加
+#include "mancala.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "io.h"
+// int main() {
+// #if defined(NATIVE_MODE)
+//     printf("do nothing...\n");
+// #else
+//     Mancala();
+// #endif
+//     return 0;
+// }
 
-#define PITS            14
-#define BUF_SIZE        40
-#define BACK_SPACE_CODE 0x08
-
-// ANSI カラーコード
-#define ANSI_PLAYER1       "\x1b[38;5;208m"
-#define ANSI_PLAYER2         "\x1b[36m"
-#define ANSI_POCKET      "\x1b[32m"
-#define ANSI_BOLD      "\x1b[1m"
-#define ANSI_UNBOLD    "\x1b[22m"
-#define ANSI_RESET        "\x1b[0m"
-
-void init_board(int board[]);
-void print_board(int board[], int perspective, int current_player);
-int  is_game_over(int board[]);
-void store_input(char* store, int* terminated);
-
-int main(void) {
+int Mancala(void) {
 #if defined(NATIVE_MODE)
     printf("do nothing...\n");
 #else
@@ -35,8 +22,8 @@ int main(void) {
     int terminated = 0;
 
     set_uart_ID(uart_flag);
-
-    while (!terminated && !is_game_over(board)) {
+    int onGame = 1;
+    while (onGame) {
         // 最新盤面を双方端末に表示
         for (int id = 0; id <= 1; id++) {
             set_uart_ID(id);
@@ -51,11 +38,13 @@ int main(void) {
         const char* color = (player == 1 ? ANSI_PLAYER1 : ANSI_PLAYER2);
         int choice, pit;
         // 入力受信
-        while (1){
+        while (!terminated){
             printf("%s>>> Player %d の手番です。ポケット1～6を選択してください：%s",
                color, player, ANSI_RESET);
             for (int i = 0; i < BUF_SIZE; i++) buf[i] = '\0';
             store_input(buf, &terminated);
+            
+            if (terminated) break;
 
             choice = atoi(buf);
             if (choice < 1 || choice > 6) {
@@ -84,7 +73,11 @@ int main(void) {
             stones--;
         }
 
-        // 自ゴール着地なら連続手番
+        if (is_game_over(board)) {
+            break;
+        }
+
+        // 自ゴール着地なら連続手番。違うなら相手の番に移行
         int in_goal = (player == 1 && pos == 7) || (player == 2 && pos == 14);
         if (in_goal) printf("%s%s\n--- 最後の石がポケットに入りました！ ---\n%s", ANSI_BOLD, ANSI_POCKET, ANSI_RESET);
         else {
@@ -93,31 +86,43 @@ int main(void) {
         }
     }
 
-    // 終了時に残り石をゴールへ移動
-    for (int i = 1; i <= 6; i++)   { board[7]  += board[i];   board[i] = 0; }
-    for (int i = 8; i <= 13; i++)  { board[14] += board[i];  board[i] = 0; }
-
+    printf("ゲーム終了\n");
     // 最終結果表示
+    int s1=0,s2=0;
+    for(int i=1;i<=6;i++) s1+=board[i];
+    for(int i=8;i<=13;i++) s2+=board[i];
     for (int id = 0; id <= 1; id++) {
         set_uart_ID(id);
         print_board(board, id + 1, 0);
-        printf("最終結果：Player 1=%d, Player 2=%d\n",
-               board[7], board[14]);
-        if      (board[7]  > board[14]) printf("Player 1 の勝利！\n");
-        else if (board[14] > board[7])  printf("Player 2 の勝利！\n");
-        else                            printf("引き分けです。\n");
+        if (s1 == 0) {
+            printf("Player 1 の勝利！\n");
+            return 1;
+        }
+        else if (s2 == 0) {
+            printf("Player 2 の勝利！\n");
+            return 2;
+        }
+        else {
+            printf("引き分けです。\n");
+            return 0;
+        }
     }
-
     set_uart_ID(0);
+    
 #endif
     return 0;
 }
 
 void init_board(int board[]) {
     for (int i = 1; i <= PITS; i++) board[i] = (i==7 || i==14)?0:4;
+    for (int i = 1; i <= 5; i++) board[i] = 0;
+    board[6] = 1;
 }
 
 void print_board(int b[], int perspective, int current_player) {
+#if defined(NATIVE_MODE)
+    printf("do nothing...\n");
+#else
     // 上段
     printf("\n");
     if (perspective == 1) {
@@ -141,10 +146,14 @@ void print_board(int b[], int perspective, int current_player) {
         printf("%s player2側\n%s", ANSI_PLAYER2, ANSI_RESET);
     }
     printf("\n");
+#endif
 }
 
 int is_game_over(int b[]) {
-    int sa=0,sb=0; for(int i=1;i<=6;i++) sa+=b[i]; for(int i=8;i<=13;i++) sb+=b[i]; return (sa==0||sb==0);
+    int sa=0,sb=0;
+    for(int i=1;i<=6;i++) sa+=b[i];
+    for(int i=8;i<=13;i++) sb+=b[i];
+    return (sa==0||sb==0);
 }
 
 void store_input(char* store, int* terminated) {
