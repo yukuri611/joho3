@@ -1,5 +1,8 @@
 #include "mancala.h"
 
+#include "io.h"
+
+
 // int main() {
 // #if defined(NATIVE_MODE)
 //     printf("do nothing...\n");
@@ -23,6 +26,10 @@ int Mancala(void) {
 
     set_uart_ID(uart_flag);
     int onGame = 1;
+    for (int id = 0; id <= 1; id++) {
+        set_uart_ID(id);
+        printf("\n\nゲームスタート\n\n");
+    }
     while (onGame) {
         // 最新盤面を双方端末に表示
         for (int id = 0; id <= 1; id++) {
@@ -86,29 +93,27 @@ int Mancala(void) {
         }
     }
 
-    printf("ゲーム終了\n");
     // 最終結果表示
     int s1=0,s2=0;
     for(int i=1;i<=6;i++) s1+=board[i];
     for(int i=8;i<=13;i++) s2+=board[i];
+    int res;
     for (int id = 0; id <= 1; id++) {
         set_uart_ID(id);
+        printf("ゲーム終了\n");
         print_board(board, id + 1, 0);
-        if (s1 == 0) {
-            printf("Player 1 の勝利！\n");
-            return 1;
-        }
-        else if (s2 == 0) {
-            printf("Player 2 の勝利！\n");
-            return 2;
-        }
-        else {
-            printf("引き分けです。\n");
-            return 0;
-        }
+    }
+    if (s1 == 0) {
+        res = 1;
+    }
+    else if (s2 == 0) {
+        res = 2;
+    }
+    else {
+        res = 0;
     }
     set_uart_ID(0);
-    
+    return res;
 #endif
     return 0;
 }
@@ -160,12 +165,26 @@ void store_input(char* store, int* terminated) {
 #if defined(NATIVE_MODE)
     (void)store;(void)terminated;
 #else
-    int pos=0; while(1){ char ch=io_getch();
-        if(ch==BACK_SPACE_CODE){ if(pos>0){pos--;store[pos]='\0';} continue; }
-        // TERMINATE_CODE は io.h 内定義済み
-        if(ch==TERMINATE_CODE){ store[pos]='\0'; printf("\nCtrl-Z detected...\n"); *terminated=1; break; }
+    int pos=0;
+    while(1){ 
+        char ch=io_getch();
+        if(ch==BACK_SPACE_CODE){
+            if(pos>0){
+                pos--;store[pos]='\0';
+            } 
+            continue; 
+        }
+        if(ch==TERMINATE_CODE){
+            store[pos]='\0';
+            printf("\nCtrl-Z detected...\n");
+            *terminated=1; break; 
+        }
         store[pos++]=ch;
-        if(ch=='\n'||pos==BUF_SIZE-1){ store[pos]='\0'; if(ch!='\n') io_putch('\n'); break; }
+        if(ch=='\n'||pos==BUF_SIZE-1){
+            store[pos]='\0';
+            if(ch!='\n') io_putch('\n');
+            break;
+        }
     }
 #endif
 }
