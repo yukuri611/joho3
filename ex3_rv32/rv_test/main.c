@@ -269,8 +269,6 @@ int Mancala(void) {
 
 void init_board(int board[]) {
     for (int i = 1; i <= PITS; i++) board[i] = (i==7 || i==14)?0:4;
-    // for (int i = 1; i <= 5; i++) board[i] = 0;
-    // board[6] = 1;
 }
 
 void print_board(int b[], int perspective, int current_player) {
