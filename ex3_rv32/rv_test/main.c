@@ -82,7 +82,7 @@ int main(){
             gpio->dout7SEG[0] = 0b01011100000111000111100101010000; // "over"
         }
         else{
-            gpio->dout7SEG[1] = N0;
+            gpio->dout7SEG[1] = N1;
             gpio->dout7SEG[0] = 0b01000110000111000101000001010100; // "turn"
         }
     }
@@ -350,205 +350,184 @@ const char *roles[TOTAL_ROLES] = {
 };
 
 
-void roll_dice(char dice[DICE]) {
-#if defined(NATIVE_MODE)
-    for(char i=0;i<DICE;i++) dice[i] = rand()%6+1;
-#else
-    for(char i=0;i<DICE;i++) dice[i] = rand()%6+1;
-#endif
-}
 
 
-void uart_puts(const char *s) {
-#if defined(NATIVE_MODE)
-    printf("%s", s);
-#else
-    set_uart_ID(0);
-    while(*s) _UARTBuf_putch(*s++);
-#endif
-}
-
-
-void uart_putint(int n) {
-#if defined(NATIVE_MODE)
-    printf("%d", n);
-#else
-    char tmp[12], *p = tmp + 11;
-    int neg = 0;
-    *p = 0;
-    if (n == 0) { _UARTBuf_putch('0'); return; }
-    if (n < 0) { neg = 1; n = -n; }
-    while (n > 0) { *(--p) = '0' + (n % 10); n /= 10; }
-    if (neg) *(--p) = '-';
-    while (*p) _UARTBuf_putch(*p++);
-#endif
-}
-
-
-void print_dice(const char dice[DICE]) {
-#if defined(NATIVE_MODE)
-    printf("Your dice: [%d] [%d] [%d] [%d] [%d]\n", dice[0], dice[1], dice[2], dice[3], dice[4]);
-#else
-    uart_puts("Your dice: [");
-    for(char i=0;i<DICE;i++) {
-        uart_putint(dice[i]);
-        if(i<DICE-1) uart_puts("] [");
+// Roll DICE dice into array
+void roll_dice(int dice[DICE]) {
+    #if defined(NATIVE_MODE)
+    printf("Native");
+ #else
+    for (int i = 0; i < DICE; ++i) {
+        dice[i] = rand() % 6 + 1;
     }
-    uart_puts("]\n");
-#endif
+    #endif
 }
 
 
-void send_str(const char *s) { uart_puts(s); }
 
 
-void recv_str(char *buf, char max_len) {
-#if defined(NATIVE_MODE)
-    fgets(buf, max_len, stdin);
-    buf[strcspn(buf, "\n")] = 0;
+// Compute yacht score for given dice and role
+int yacht_score(int dice[DICE], const char *role) {
+    #if defined(NATIVE_MODE)
+    printf("Native");
 #else
-    set_uart_ID(0);
-    char pos = 0;
-    while(1) {
-        char ch = _UARTBuf_getch();
-        if(ch=='\n'||pos>=max_len-1) break;
-        buf[pos++] = ch;
+    int cnt[7] = {0}, sum = 0, maxc = 0, pairs = 0;
+    for (int i = 0; i < DICE; ++i) {
+        int v = dice[i]; cnt[v]++; sum += v;
+        if (cnt[v] > maxc) maxc = cnt[v];
     }
-    buf[pos]=0;
+    for (int v = 1; v <= 6; ++v) if (cnt[v] == 2) pairs++;
+    if (!strcmp(role, "Aces")) return cnt[1];
+    if (!strcmp(role, "Deuces")) return cnt[2]*2;
+    if (!strcmp(role, "Treys")) return cnt[3]*3;
+    if (!strcmp(role, "Fours")) return cnt[4]*4;
+    if (!strcmp(role, "Fives")) return cnt[5]*5;
+    if (!strcmp(role, "Sixes")) return cnt[6]*6;
+    if (!strcmp(role, "Choice")) return sum;
+    if (!strcmp(role, "Four-of-a-kind") && maxc>=4) return sum;
+    if (!strcmp(role, "Full-house") && maxc==3 && pairs==1) return sum;
+    if (!strcmp(role, "S.Straight")) {
+        for (int s=1; s<=3; ++s)
+            if (cnt[s]&&cnt[s+1]&&cnt[s+2]&&cnt[s+3]) return 15;
+    }
+    if (!strcmp(role, "B.Straight")) {
+        if ((cnt[1]&&cnt[2]&&cnt[3]&&cnt[4]&&cnt[5]) ||
+            (cnt[2]&&cnt[3]&&cnt[4]&&cnt[5]&&cnt[6])) return 30;
+    }
+    if (!strcmp(role, "Yacht") && maxc==5) return 50;
+    return 0;
 #endif
 }
 
 
-void send_int(int val) {
-#if defined(NATIVE_MODE)
-    printf("%d\n", val);
+
+
+// UART output helpers for specific channel
+void uart_puts_id(int id, const char *s) {
+    #if defined(NATIVE_MODE)
+    printf("Native");
 #else
-    uart_putint(val); _UARTBuf_putch('\n');
-#endif
+    for (int ch = 0; s[ch]; ++ch) {
+        set_uart_ID(id);
+        _UARTBuf_putch(s[ch]);
+    }
+#endif    
 }
-
-
-int recv_int() {
+void uart_putint_id(int id, int n) {
 #if defined(NATIVE_MODE)
-    int v;
-    scanf("%d", &v);
-    getchar();
-    return v;
-#else
-    set_uart_ID(0);
-    char buf[8]; char pos = 0;
-    while (1) {
-        char ch = _UARTBuf_getch();
-        if (ch == '\n' || pos >= 7) break;
-        buf[pos++] = ch;
+    printf("Native");
+#else    
+    char buf[12]; char *p = buf + sizeof(buf) - 1;
+    *p = '\0';
+    if (n == 0) {
+        set_uart_ID(id); _UARTBuf_putch('0');
+        return;
     }
-    buf[pos] = 0;
-    return atoi(buf);
+    int neg = n < 0;
+    if (neg) n = -n;
+    while (n) { *--p = '0' + (n % 10); n /= 10; }
+    if (neg) *--p = '-';
+    for (; *p; ++p) { set_uart_ID(id); _UARTBuf_putch(*p); }
+#endif
+}
+void uart_newline_id(int id) {
+    #if defined(NATIVE_MODE)
+    printf("Native");
+#else
+    set_uart_ID(id); _UARTBuf_putch('\n');
+#endif    
+}
+
+
+
+
+// Send prompt and receive string
+void recv_choice(int id, char *buf, int maxlen) {
+    #if defined(NATIVE_MODE)
+    printf("Native");
+#else
+    set_uart_ID(id);
+    int pos = 0;
+    while (pos < maxlen - 1) {
+        char c = _UARTBuf_getch();
+        if (c == '\n') break;
+        buf[pos++] = c;
+    }
+    buf[pos] = '\0';
+    UARTBuf_consume_new_line(&UART_BUF_RX[id]);
 #endif
 }
 
 
-int yacht_score(const char dice[DICE], const char *chosen_role) {
-    char counts[7] = {0};
-    char i, max_count = 0, pairs = 0;
-    int sum = 0, score = 0;
-    for(i=0;i<DICE;i++) {
-        counts[dice[i]]++;
-        sum += dice[i];
-        if(counts[dice[i]] > max_count) max_count = counts[dice[i]];
-    }
-    for(i=1;i<=6;i++) if(counts[i]==2) pairs++;
 
 
-    if(strcmp(chosen_role, "Aces") == 0) score = counts[1] * 1;
-    else if(strcmp(chosen_role, "Deuces") == 0) score = counts[2] * 2;
-    else if(strcmp(chosen_role, "Treys") == 0) score = counts[3] * 3;
-    else if(strcmp(chosen_role, "Fours") == 0) score = counts[4] * 4;
-    else if(strcmp(chosen_role, "Fives") == 0) score = counts[5] * 5;
-    else if(strcmp(chosen_role, "Sixes") == 0) score = counts[6] * 6;
-    else if(strcmp(chosen_role, "Choice") == 0) score = sum;
-    else if(strcmp(chosen_role, "Four-of-a-kind") == 0 && max_count >= 4) score = sum;
-    else if(strcmp(chosen_role, "Full-house") == 0 && max_count == 3 && pairs == 1) score = sum;
-    else if(strcmp(chosen_role, "S.Straight") == 0) {
-        for(i=1;i<=3;i++) {
-            if(counts[i]&&counts[i+1]&&counts[i+2]&&counts[i+3])
-                score = 15;
-        }
-    }
-    else if(strcmp(chosen_role, "B.Straight") == 0) {
-        if((counts[1]&&counts[2]&&counts[3]&&counts[4]&&counts[5]) ||
-           (counts[2]&&counts[3]&&counts[4]&&counts[5]&&counts[6]))
-            score = 30;
-    }
-    else if(strcmp(chosen_role, "Yacht") == 0 && max_count == 5) score = 50;
-    return score;
-}
 int Yacht() {
-#if defined(NATIVE_MODE)
+    #if defined(NATIVE_MODE)
     printf("Native");
 #else
     enable_UART_interrupt();
     srand(sysctrl->mtime);
-
-
-    char dice[DICE], used_roles[TOTAL_ROLES] = {0};
-    char chosen_role[16];
-    int total_score = 0, upper_score = 0;
-
-
-    for(char round=0; round<ROUNDS; round++) {
-        send_str("\n--- Round ");
-        uart_putint(round + 1);
-        send_str(" ---\n");
-        roll_dice(dice);
-        print_dice(dice);
-
-
-        send_str("Available roles:\n");
-        for(char i=0;i<TOTAL_ROLES;i++)
-            if(!used_roles[i]) { send_str(roles[i]); send_str("\n"); }
-
-
-        send_str("Choose a role:\n");
-        recv_str(chosen_role, sizeof(chosen_role));
-
-
-        char valid = 0;
-        for(char i=0;i<TOTAL_ROLES;i++) {
-            if(!used_roles[i] && strcmp(chosen_role, roles[i]) == 0) {
-                valid = 1; used_roles[i] = 1; break;
-            }
+    int total[2] = {0, 0};
+    int dice0[DICE], dice1[DICE];
+    char choice0[16], choice1[16];
+    for (int round = 1; round <= ROUNDS; ++round) {
+        // Player 0 turn
+        uart_puts_id(0, "\n--- Round "); uart_putint_id(0, round); uart_puts_id(0, " ---\n");
+        roll_dice(dice0);
+        uart_puts_id(0, "Your dice: ");
+        for (int i = 0; i < DICE; ++i) {
+            uart_putint_id(0, dice0[i]); uart_puts_id(0, " ");
         }
-        if(!valid) {
-            send_str("Invalid or already used role. Please select again.\n");
-            round--;
-            continue;
+        uart_puts_id(0, "\nAvailable roles:\n");
+        for (int i = 0; i < TOTAL_ROLES; ++i) {
+            uart_puts_id(0, roles[i]); uart_puts_id(0, "\n");
         }
-        int round_score = yacht_score(dice, chosen_role);
-        total_score += round_score;
-        if(strcmp(chosen_role, "Aces") == 0 || strcmp(chosen_role, "Deuces") == 0 || strcmp(chosen_role, "Treys") == 0 ||
-           strcmp(chosen_role, "Fours") == 0 || strcmp(chosen_role, "Fives") == 0 || strcmp(chosen_role, "Sixes") == 0)
-            upper_score += round_score;
+        uart_puts_id(0, "Choose role:\n");
+        recv_choice(0, choice0, sizeof(choice0));
+        int sc0 = yacht_score(dice0, choice0);
+        total[0] += sc0;
+        uart_puts_id(0, "Score: "); uart_putint_id(0, sc0); uart_newline_id(0);
 
 
-        send_str("Your score for ");
-        send_str(chosen_role);
-        send_str(": ");
-        uart_putint(round_score);
-        send_str("\n");
+
+
+        // Player 1 turn
+        uart_puts_id(1, "\n--- Round "); uart_putint_id(1, round); uart_puts_id(1, " ---\n");
+        roll_dice(dice1);
+        uart_puts_id(1, "Your dice: ");
+        for (int i = 0; i < DICE; ++i) {
+            uart_putint_id(1, dice1[i]); uart_puts_id(1, " ");
+        }
+        uart_puts_id(1, "\nAvailable roles:\n");
+        for (int i = 0; i < TOTAL_ROLES; ++i) {
+            uart_puts_id(1, roles[i]); uart_puts_id(1, "\n");
+        }
+        uart_puts_id(1, "Choose role:\n");
+        recv_choice(1, choice1, sizeof(choice1));
+        int sc1 = yacht_score(dice1, choice1);
+        total[1] += sc1;
+        uart_puts_id(1, "Score: "); uart_putint_id(1, sc1); uart_newline_id(1);
     }
-
-
-    if(upper_score >= 63) {
-        send_str("Upper section bonus: 35 points!\n");
-        total_score += 35;
+    // Show final results
+    for (int id = 0; id < 2; ++id) {
+        int opp = total[1-id];
+        uart_puts_id(id, "\nFinal Your total: "); uart_putint_id(id, total[id]);
+        uart_puts_id(id, " Opponent total: "); uart_putint_id(id, opp);
+        uart_puts_id(id, "\n");
+        if (total[id] > opp) {
+            return 1;
+        }
+        else if (total[id] < opp){
+            return 2;
+        }
+        else {
+            return 0;
+        }
     }
-    send_str("\nGame Over! Your total score: ");
-    uart_putint(total_score);
-    send_str("\n");
-    return total_score;
-    #endif
+#endif
+ return 0;
 }
+
 
 //Speed
 const char ranks[] = "A23456789TJQK";

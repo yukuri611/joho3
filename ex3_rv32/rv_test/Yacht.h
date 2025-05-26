@@ -10,13 +10,10 @@
 #define TOTAL_ROLES 13
 
 
-void roll_dice(char dice[DICE]);
-void uart_puts(const char *s);
-void uart_putint(int n);
-void print_dice(const char dice[DICE]);
-void send_str(const char *s) ;
-void recv_str(char *buf, char max_len);
-void send_int(int val);
-int recv_int();
-int yacht_score(const char dice[DICE], const char *chosen_role);
+void roll_dice(int dice[DICE]);
+int yacht_score(int dice[DICE], const char *role);
+void uart_puts_id(int id, const char *s);
+void uart_putint_id(int id, int n);
+void uart_newline_id(int id);
+void recv_choice(int id, char *buf, int maxlen);
 int Yacht();
