@@ -3,14 +3,14 @@
 #include "io.h"
 
 
-// int main() {
-// #if defined(NATIVE_MODE)
-//     printf("do nothing...\n");
-// #else
-//     Mancala();
-// #endif
-//     return 0;
-// }
+int main() {
+#if defined(NATIVE_MODE)
+    printf("do nothing...\n");
+#else
+    Mancala();
+#endif
+    return 0;
+}
 
 int Mancala(void) {
 #if defined(NATIVE_MODE)
@@ -28,7 +28,10 @@ int Mancala(void) {
     int onGame = 1;
     for (int id = 0; id <= 1; id++) {
         set_uart_ID(id);
-        printf("\n\nゲームスタート\n\n");
+        printf("\n\nゲームスタート\nゲーム名: マンカラ\n\n");
+        printf("ゲームの説明 --------------------------------------------------------\n");
+        printf("下に表示されているボードについて説明します。\n上側が相手のポケット。下側が自分側のポケットです。\n各ポケットには番号が割り振られており、左から順に1から6になっています。\n自分のターンになったら、ポケットの番号を指定してください。\n自分側のポケットの石をすべて0にしたら勝利です！\nより詳細な内容は、レポートのゲーム内容について記載した部分を参照してください。\n");
+        printf("--------------------------------------------------------------------\n");
     }
     while (onGame) {
         // 最新盤面を双方端末に表示
@@ -37,6 +40,10 @@ int Mancala(void) {
             printf("\n--- 盤面が更新されました ---\n");
             print_board(board, id + 1, player);
         }
+        
+        uart_flag = (player == 1 ? 1 : 0);
+        set_uart_ID(uart_flag);
+        printf("相手の入力を待っています。\n");
 
         // 手番側端末に切り替え
         uart_flag = (player == 1 ? 0 : 1);
@@ -44,9 +51,10 @@ int Mancala(void) {
 
         const char* color = (player == 1 ? ANSI_PLAYER1 : ANSI_PLAYER2);
         int choice, pit;
+        
         // 入力受信
         while (!terminated){
-            printf("%s>>> Player %d の手番です。ポケット1～6を選択してください：%s",
+            printf("%s>>> あなた (Player %d) の手番です。ポケットの番号(1から6)を選択してください：%s",
                color, player, ANSI_RESET);
             for (int i = 0; i < BUF_SIZE; i++) buf[i] = '\0';
             store_input(buf, &terminated);
@@ -120,8 +128,8 @@ int Mancala(void) {
 
 void init_board(int board[]) {
     for (int i = 1; i <= PITS; i++) board[i] = (i==7 || i==14)?0:4;
-    for (int i = 1; i <= 5; i++) board[i] = 0;
-    board[6] = 1;
+    // for (int i = 1; i <= 5; i++) board[i] = 0;
+    // board[6] = 1;
 }
 
 void print_board(int b[], int perspective, int current_player) {

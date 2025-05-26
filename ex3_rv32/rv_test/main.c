@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include "io.h"
-#include "Mancala.h"
-#include "Yacht.h"
-#include "Speed.h"
-#include "Nine_Mens_Morris.h"
-#include "hit_and_blow.h"
+#include "GameHeaders.h"
 
 
 #define DICE 5
@@ -21,7 +12,6 @@ const char *game_list[] = {"\0", "マンカラ", "ヨット", "スピード", "�
 
 void timer_handler();
 void print_segment_int(int M);
-
 
 int main(){
     char ch = 0;
@@ -82,7 +72,7 @@ int main(){
             gpio->dout7SEG[0] = 0b01011100000111000111100101010000; // "over"
         }
         else{
-            gpio->dout7SEG[1] = N1;
+            gpio->dout7SEG[1] = N0;
             gpio->dout7SEG[0] = 0b01000110000111000101000001010100; // "turn"
         }
     }
@@ -157,8 +147,8 @@ void print_segment_int(int M){
         while(k != 1){
             k /= 10;
             j = M / k;
-            if(k >= 10000)  N0 = (N0 << 8) & int_to_gpio[j];
-            else            N1 = (N1 << 8) & int_to_gpio[j];
+            if(k >= 10000)  N1 = (N1 << 8) | int_to_gpio[j];
+            else            N0 = (N0 << 8) | int_to_gpio[j];
             M -= k * j;
         }
     }
@@ -181,7 +171,10 @@ int Mancala(void) {
     int onGame = 1;
     for (int id = 0; id <= 1; id++) {
         set_uart_ID(id);
-        printf("\n\nゲームスタート\n\n");
+        printf("\n\nゲームスタート\nゲーム名: マンカラ\n\n");
+        printf("ゲームの説明 --------------------------------------------------------\n");
+        printf("下に表示されているボードについて説明します。\n上側が相手のポケット。下側が自分側のポケットです。\n各ポケットには番号が割り振られており、左から順に1から6になっています。\n自分のターンになったら、ポケットの番号を指定してください。\n自分側のポケットの石をすべて0にしたら勝利です！\nより詳細な内容は、レポートのゲーム内容について記載した部分を参照してください。\n");
+        printf("--------------------------------------------------------------------\n");
     }
     while (onGame) {
         // 最新盤面を双方端末に表示
@@ -190,6 +183,9 @@ int Mancala(void) {
             printf("\n--- 盤面が更新されました ---\n");
             print_board(board, id + 1, player);
         }
+        uart_flag = (player == 1 ? 1 : 0);
+        set_uart_ID(uart_flag);
+        printf("相手の入力を待っています。\n");
 
         // 手番側端末に切り替え
         uart_flag = (player == 1 ? 0 : 1);
@@ -199,7 +195,7 @@ int Mancala(void) {
         int choice, pit;
         // 入力受信
         while (!terminated){
-            printf("%s>>> Player %d の手番です。ポケット1～6を選択してください：%s",
+            printf("%s>>> あなた (Player %d) の手番です。ポケットの番号(1から6)を選択してください：%s",
                color, player, ANSI_RESET);
             for (int i = 0; i < BUF_SIZE; i++) buf[i] = '\0';
             store_input(buf, &terminated);
@@ -273,8 +269,8 @@ int Mancala(void) {
 
 void init_board(int board[]) {
     for (int i = 1; i <= PITS; i++) board[i] = (i==7 || i==14)?0:4;
-    for (int i = 1; i <= 5; i++) board[i] = 0;
-    board[6] = 1;
+    // for (int i = 1; i <= 5; i++) board[i] = 0;
+    // board[6] = 1;
 }
 
 void print_board(int b[], int perspective, int current_player) {
