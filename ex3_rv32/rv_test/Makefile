@@ -1,4 +1,4 @@
-SRC = mancala main
+SRC = main
 #SRC = t4b
 SRC_C = $(SRC).c
 
