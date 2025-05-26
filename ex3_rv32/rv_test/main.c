@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "io.h"
-#include "mancala.h"
+#include "Mancala.h"
 #include "Yacht.h"
 
 int Nine_Mens_Morris(){return 0;}
@@ -474,8 +474,6 @@ int yacht_score(const char dice[DICE], const char *chosen_role) {
     else if(strcmp(chosen_role, "Yacht") == 0 && max_count == 5) score = 50;
     return score;
 }
-
-
 int Yacht() {
 #if defined(NATIVE_MODE)
     printf("Native");
@@ -539,6 +537,8 @@ int Yacht() {
     send_str("\nGame Over! Your total score: ");
     uart_putint(total_score);
     send_str("\n");
+    return total_score;
     #endif
-    return 0;
 }
+
+

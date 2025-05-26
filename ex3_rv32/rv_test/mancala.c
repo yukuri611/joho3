@@ -1,4 +1,4 @@
-#include "mancala.h"
+#include "Mancala.h"
 
 #include "io.h"
 
