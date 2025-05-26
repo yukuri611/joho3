@@ -40,7 +40,7 @@ int Mancala(void) {
             printf("\n--- 盤面が更新されました ---\n");
             print_board(board, id + 1, player);
         }
-        
+
         uart_flag = (player == 1 ? 1 : 0);
         set_uart_ID(uart_flag);
         printf("相手の入力を待っています。\n");
@@ -128,8 +128,8 @@ int Mancala(void) {
 
 void init_board(int board[]) {
     for (int i = 1; i <= PITS; i++) board[i] = (i==7 || i==14)?0:4;
-    // for (int i = 1; i <= 5; i++) board[i] = 0;
-    // board[6] = 1;
+    for (int i = 1; i <= 5; i++) board[i] = 0;
+    board[6] = 1;
 }
 
 void print_board(int b[], int perspective, int current_player) {

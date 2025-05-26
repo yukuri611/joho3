@@ -736,7 +736,7 @@ int Nine_Mens_Morris(){
         printf("--- 相手の入力を待っています... ---\n");
 
 
-        if(turn > 10){
+        if(turn > 18){
              number_ntp = 0;
                 for(i=0;i<7;i++)
                     for(j=0;j<7;j++)
@@ -747,7 +747,7 @@ int Nine_Mens_Morris(){
         }
 
 
-        if(turn<11){
+        if(turn<19){
             set_uart_ID(player-'1');
             while(1){
                 printf("駒を置く場所を選択してください  : ");
@@ -949,14 +949,6 @@ int Hit_and_Blow(){
                     flag = 1;
         }
     }
-
-
-    // 検証用
-    for(i=0;i<question_size;i++){
-        printf("%d ",seikai[i]);
-    }
-    printf("\n");
-
 
 
 
