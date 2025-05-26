@@ -43,26 +43,39 @@ int main(){
     printf("\nゲームを選択してください: ");
     while(1){
         store_input(&ch, &terminated);
-        if('1' <= ch && ch <= '5') {
+        if('1' <= ch && ch <= '6') {
             game = ch - '0';
             printf("\n");
             break;
         }
     }
 
-    if(game == 1)       result = Mancala();
-    else if(game == 2)  result = Yacht();
-    else if(game == 3)  result = Speed();
-    else if(game == 4)  result = Nine_Mens_Morris();
-    else if(game == 5)  result = Hit_and_Blow();
-    else if(game == 6)  result = Hit_and_Blow_2();
 
-    if(game == 2){
-        print_segment_int(result);
-        gpio->dout7SEG[1] = N1;
-        gpio->dout7SEG[0] = N0;
+    switch(game) {
+        case 1:
+            result = Mancala();
+            break;
+        case 2:
+            result = Yacht();
+            break;
+        case 3:
+            result = Speed();
+            break;
+        case 4:
+            result = Nine_Mens_Morris();
+            break;
+        case 5:
+            result = Hit_and_Blow();
+            break;
+        case 6:
+            result = Hit_and_Blow_2();
+            break;
+        default:
+            // 必要に応じてデフォルトの処理をここに追加
+            break;
     }
-    else if(game == 6){
+
+    if(game == 6){
         print_segment_int(result);
         if(result > 30){
             gpio->dout7SEG[1] = 0b01000110000111000101000001010100; // "turn"
@@ -151,9 +164,7 @@ void print_segment_int(int M){
     }
 }
 
-
 //Mancala
-
 int Mancala(void) {
 #if defined(NATIVE_MODE)
     printf("do nothing...\n");
@@ -1065,8 +1076,7 @@ int Hit_and_Blow(){
 }
 
 
-
-
+//Hit and Blow2
 void Hit_and_Blow_2_print(unsigned short data[4]){
     for(int i=15;i>=0;i--){
         if(data[0] & 1 << i) printf("1");
@@ -1086,7 +1096,7 @@ void Hit_and_Blow_2_timer_handler(){
     }
     else if(counter == 1){
         gpio->dout7SEG[1] = (HiB_and >= 10 ? int_to_gpio[1] << 8 : 0) | int_to_gpio[HiB_and % 10];
-        gpio->dout7SEG[0] = 0b00000000011101110101011101011110; // " and"
+        gpio->dout7SEG[0] = 0b00000000011101110101010001011110; // " and"
     }
     else{
         gpio->dout7SEG[1] = (HiB_or  >= 10 ? int_to_gpio[1] << 8 : 0) | int_to_gpio[HiB_or  % 10];
@@ -1100,6 +1110,7 @@ void Hit_and_Blow_2_timer_handler(){
 
 
 int Hit_and_Blow_2(){
+    printf("hello\n");
     unsigned short data[30][4],answer,sw;
     int i,j,turn,or,and,hit;
     char str[16],ch;
@@ -1116,7 +1127,12 @@ int Hit_and_Blow_2(){
     while(1){
         turn++;
         if(turn > 30){
-            printf("turn over.\n");
+            printf("ターン数を超過したので終了します。\n");
+            for(i=15;i>=0;i--){
+                if(answer & 1 << i) printf("1");
+                else                printf("0");
+                printf("です\n");
+            }
             break;
         }
         printf("%d ターン目です。ビット列を入力してください。 >> ",turn);
@@ -1136,22 +1152,23 @@ int Hit_and_Blow_2(){
                 i = 16;
                 sw = 0;
                 or = and = hit = 0;
-                printf("ビット列を入力してください。 >> ");
+                printf("\nビット列を入力してください。 >> ");
                 fflush(stdout);
+                continue;
             }
             sw = sw << 1 | (ch - '0');
             if(!((ch ^ answer >> i) & 1)) hit++;
             if(  (ch & answer >> i) & 1 ) and++;
             if(  (ch | answer >> i) & 1 ) or++;
         }
-        printf("\n");
         data[turn-1][0] =           sw;
         data[turn-1][1] = HiB_hit = hit;
         data[turn-1][2] = HiB_and = and;
         data[turn-1][3] = HiB_or  = or ;
+        printf("\n%d %d %d %d\n",sw,hit,and,or);
         Hit_and_Blow_2_print(data[turn-1]);
         set_mtimer_interval(1000/*msec*/);
-        timer_interrupt_hook = timer_handler;
+        timer_interrupt_hook = Hit_and_Blow_2_timer_handler;
         enable_timer_interrupt(); //割り込みハンドラを設定するための関数
         if(hit == 16){
             printf("clear.");
@@ -1162,4 +1179,3 @@ int Hit_and_Blow_2(){
     #endif
     return turn;
 }
-
